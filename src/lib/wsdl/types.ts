@@ -15,6 +15,7 @@ export interface WsdlDocument {
 
 export interface WsdlService {
   name: string
+  documentation?: string
   endpoints: WsdlEndpoint[]
 }
 
@@ -43,11 +44,13 @@ export interface WsdlBindingOperation {
 
 export interface WsdlInterface {
   name: string
+  documentation?: string
   operations: WsdlInterfaceOperation[]
 }
 
 export interface WsdlInterfaceOperation {
   name: string
+  documentation?: string
   input: WsdlMessage | null
   output: WsdlMessage | null
 }
@@ -90,6 +93,7 @@ export interface ResolvedOperation {
   bindingStyle: BindingStyle
   soapVersion: SoapVersion
   operationName: string
+  documentation?: string
   soapAction: string
   input: WsdlMessage | null
   output: WsdlMessage | null

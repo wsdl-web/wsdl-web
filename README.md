@@ -19,6 +19,7 @@ No install required.
 - **Syntax-highlighted XML** for requests and responses
 - **Response metadata** — HTTP status, response time, full response body
 - **Copy as cURL** — copy the SOAP request as a ready-to-use cURL command
+- **Inline documentation** — displays `<wsdl:documentation>` from services and operations
 - **Base URL override** — redirect requests to a different host (e.g. localhost)
 - **Local file support** — browse and load WSDL files from your device
 

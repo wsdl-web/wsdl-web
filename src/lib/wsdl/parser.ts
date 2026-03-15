@@ -75,6 +75,7 @@ export function resolveOperations(wsdl: WsdlDocument): ResolvedOperation[] {
           bindingStyle: bindingOp.style ?? binding.style,
           soapVersion: binding.soapVersion,
           operationName: bindingOp.name,
+          documentation: ifaceOp?.documentation,
           soapAction: bindingOp.soapAction,
           input: ifaceOp?.input ?? null,
           output: ifaceOp?.output ?? null,

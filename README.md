@@ -2,9 +2,10 @@
 
 A browser-based interactive explorer for WSDL web services. Enter a WSDL URL to inspect its services, endpoints, bindings and operations, then invoke them directly from the browser with auto-generated SOAP requests.
 
-Think [Swagger UI](https://github.com/swagger-api/swagger-ui), but for SOAP/WSDL.
+> Think [Swagger UI](https://github.com/swagger-api/swagger-ui), but for SOAP/WSDL.
 
-**[Try it live](https://wsdl-tools.github.io/wsdl-web-ui)** — no install required.
+### [Try it live &rarr;](https://wsdl-tools.github.io/wsdl-web-ui)
+No install required.
 
 ## Features
 
@@ -15,6 +16,20 @@ Think [Swagger UI](https://github.com/swagger-api/swagger-ui), but for SOAP/WSDL
 - **"Try it out" mode** — edit the generated XML, then execute the request and see the response
 - **Syntax-highlighted XML** for requests and responses
 - **Response metadata** — HTTP status, response time, full response body
+
+## Screenshots
+
+### Exploring a WSDL service
+
+Load a WSDL to see its services, endpoints and operations with auto-generated SOAP request envelopes and syntax highlighting.
+
+![Operation detail with SOAP envelope](docs/screenshot-operation.png)
+
+### Try it out
+
+Edit the request XML and execute it directly from the browser.
+
+![Try it out mode](docs/screenshot-try-it-out.png)
 
 ## Usage
 

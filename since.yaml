@@ -6,6 +6,9 @@ ignore:
 
 before:
   - script: |
+      npm run lint
+      npm test
+      npm run build
       npm version "${SINCE_NEW_VERSION}" --no-git-tag-version
       git add package.json package-lock.json
 

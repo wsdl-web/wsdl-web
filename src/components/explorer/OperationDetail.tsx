@@ -20,6 +20,7 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
     setRequestXml,
     executeRequest,
     getEffectiveEndpoint,
+    getResolvedCustomHeaders,
   } = useWsdlStore()
 
   const [curlCopied, setCurlCopied] = useState(false)
@@ -41,6 +42,7 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
       soapAction: operation.soapAction,
       soapVersion: operation.soapVersion,
       body: state.requestXml,
+      customHeaders: getResolvedCustomHeaders(),
     })
     navigator.clipboard.writeText(curl).then(() => {
       setCurlCopied(true)

@@ -12,8 +12,8 @@ Support `?url=...` to pre-load a WSDL and `#service/endpoint/operation` to auto-
 ### ~~2. WSDL `<documentation>` extraction and display~~ ✓
 ~~Parse `<wsdl:documentation>` elements on services, port types, and operations. Show them inline — service-level docs in the header, operation-level docs in the detail view.~~
 
-### 3. Custom request headers (including WS-Security)
-Add a headers panel — global or per-operation — where users can add key/value pairs included in requests. Covers Basic Auth, API keys, and WS-Security tokens.
+### ~~3. Custom request headers (including WS-Security)~~ ✅
+~~Add a headers panel — global or per-operation — where users can add key/value pairs included in requests. Covers Basic Auth, API keys, and WS-Security tokens.~~
 
 ### 4. SOAP Fault parsing and display
 Detect `<soap:Fault>` in responses and render them distinctly — showing faultcode, faultstring, and detail in a structured, readable format.

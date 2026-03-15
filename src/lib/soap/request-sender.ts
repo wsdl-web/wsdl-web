@@ -7,7 +7,7 @@ import { SOAP_11_CONTENT_TYPE, SOAP_12_CONTENT_TYPE } from './constants'
 export async function sendSoapRequest(request: SoapRequest): Promise<SoapResponse> {
   const { endpointUrl, soapAction, soapVersion, envelopeXml } = request
 
-  const headers: Record<string, string> = {}
+  const headers: Record<string, string> = { ...request.customHeaders }
 
   if (soapVersion === '1.1') {
     headers['Content-Type'] = SOAP_11_CONTENT_TYPE

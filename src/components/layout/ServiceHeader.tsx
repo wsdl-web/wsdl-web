@@ -1,6 +1,7 @@
 import type { WsdlDocument } from '@/lib/wsdl/types'
 import { useWsdlStore } from '@/store/wsdl-store'
 import { Globe } from 'lucide-react'
+import { HeadersPanel } from './HeadersPanel'
 
 interface ServiceHeaderProps {
   document: WsdlDocument
@@ -67,6 +68,7 @@ export function ServiceHeader({ document: doc }: ServiceHeaderProps) {
           </span>
         )}
       </div>
+      <HeadersPanel />
     </div>
   )
 }

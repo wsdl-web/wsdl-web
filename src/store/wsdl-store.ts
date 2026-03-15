@@ -4,7 +4,7 @@ import { fetchAndParseWsdl, parseWsdlText, resolveOperations } from '@/lib/wsdl/
 import { buildSoapEnvelope } from '@/lib/soap/envelope-builder'
 import { sendSoapRequest } from '@/lib/soap/request-sender'
 import { generateSampleXml } from '@/lib/wsdl/xsd-utils'
-import type { SoapResponse } from '@/lib/soap/types'
+import type { SoapResponse, CustomHeader } from '@/lib/soap/types'
 
 export interface OperationRequestState {
   requestXml: string
@@ -41,6 +41,14 @@ interface WsdlStore {
   expandedOperations: Set<string>
   toggleOperation: (id: string) => void
   expandOperation: (id: string) => void
+
+  // Custom headers (global)
+  customHeaders: CustomHeader[]
+  addCustomHeader: () => void
+  updateCustomHeader: (id: string, field: 'key' | 'value', value: string) => void
+  toggleCustomHeader: (id: string) => void
+  removeCustomHeader: (id: string) => void
+  getResolvedCustomHeaders: () => Record<string, string>
 
   // Per-operation request state
   requestStates: Record<string, OperationRequestState>
@@ -165,6 +173,36 @@ export const useWsdlStore = create<WsdlStore>((set, get) => ({
       return { expandedOperations: next }
     }),
 
+  customHeaders: [],
+  addCustomHeader: () =>
+    set((state) => ({
+      customHeaders: [
+        ...state.customHeaders,
+        { id: crypto.randomUUID(), key: '', value: '', enabled: true },
+      ],
+    })),
+  updateCustomHeader: (id, field, value) =>
+    set((state) => ({
+      customHeaders: state.customHeaders.map((h) =>
+        h.id === id ? { ...h, [field]: value } : h
+      ),
+    })),
+  toggleCustomHeader: (id) =>
+    set((state) => ({
+      customHeaders: state.customHeaders.map((h) =>
+        h.id === id ? { ...h, enabled: !h.enabled } : h
+      ),
+    })),
+  removeCustomHeader: (id) =>
+    set((state) => ({
+      customHeaders: state.customHeaders.filter((h) => h.id !== id),
+    })),
+  getResolvedCustomHeaders: () => {
+    return get().customHeaders
+      .filter((h) => h.enabled && h.key.trim())
+      .reduce((acc, h) => ({ ...acc, [h.key.trim()]: h.value }), {} as Record<string, string>)
+  },
+
   requestStates: {},
 
   getOrCreateRequestState: (opKey, op) => {
@@ -217,6 +255,7 @@ export const useWsdlStore = create<WsdlStore>((set, get) => ({
         soapAction: op.soapAction,
         soapVersion: op.soapVersion,
         envelopeXml: reqState.requestXml,
+        customHeaders: get().getResolvedCustomHeaders(),
       })
       set((state) => ({
         requestStates: {

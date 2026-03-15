@@ -42,6 +42,23 @@ describe('cURL Builder', () => {
     expect(curl).toContain("it'\\''s a test")
   })
 
+  it('includes custom headers before SOAP headers', () => {
+    const curl = buildCurlCommand({
+      endpointUrl: 'http://example.com/service',
+      soapAction: 'urn:test',
+      soapVersion: '1.1',
+      body: '<test/>',
+      customHeaders: { Authorization: 'Bearer token', 'X-Api-Key': 'abc' },
+    })
+
+    expect(curl).toContain("Authorization: Bearer token")
+    expect(curl).toContain("X-Api-Key: abc")
+    // Custom headers should appear before SOAP headers
+    const authIndex = curl.indexOf('Authorization')
+    const contentTypeIndex = curl.indexOf('Content-Type')
+    expect(authIndex).toBeLessThan(contentTypeIndex)
+  })
+
   it('formats with line continuations', () => {
     const curl = buildCurlCommand({
       endpointUrl: 'http://example.com/service',

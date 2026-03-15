@@ -28,6 +28,7 @@ Then open http://localhost:8080 in your browser.
 - **Response metadata** — HTTP status, response time, full response body
 - **Copy as cURL** — copy the SOAP request as a ready-to-use cURL command
 - **Inline documentation** — displays `<wsdl:documentation>` from services and operations
+- **Custom request headers** — add headers like Authorization, API keys, or WS-Security tokens to requests
 - **Base URL override** — redirect requests to a different host (e.g. localhost)
 - **Local file support** — browse and load WSDL files from your device
 - **Deep linking** — shareable URLs with `?url=` to pre-load a WSDL and `#service/endpoint/operation` to jump to a specific operation

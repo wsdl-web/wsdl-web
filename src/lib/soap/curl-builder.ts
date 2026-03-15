@@ -6,15 +6,22 @@ export interface CurlParams {
   soapAction: string
   soapVersion: SoapVersion
   body: string
+  customHeaders?: Record<string, string>
 }
 
 /**
  * Build a cURL command string for a SOAP request.
  */
 export function buildCurlCommand(params: CurlParams): string {
-  const { endpointUrl, soapAction, soapVersion, body } = params
+  const { endpointUrl, soapAction, soapVersion, body, customHeaders } = params
 
   const parts: string[] = ['curl']
+
+  if (customHeaders) {
+    for (const [name, value] of Object.entries(customHeaders)) {
+      parts.push(header(name, value))
+    }
+  }
 
   if (soapVersion === '1.1') {
     parts.push(header('Content-Type', SOAP_11_CONTENT_TYPE))

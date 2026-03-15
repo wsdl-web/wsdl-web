@@ -104,6 +104,11 @@ describe('WSDL 1.1 Parser', () => {
       expect(wsdl.bindings[0].style).toBe('rpc')
     })
 
+    it('returns undefined when documentation is absent', () => {
+      expect(wsdl.services[0].documentation).toBeUndefined()
+      expect(wsdl.interfaces[0].operations[0].documentation).toBeUndefined()
+    })
+
     it('parses type-based message parts', () => {
       const op = wsdl.interfaces[0].operations[0]
       expect(op.input!.parts[0].type).toBe('tns:AddRequest')

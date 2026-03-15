@@ -34,6 +34,7 @@
 
   <portType name="StockQuotePortType">
     <operation name="GetLastTradePrice">
+      <documentation>Returns the last recorded trade price for a given ticker symbol.</documentation>
       <input message="tns:GetLastTradePriceInput"/>
       <output message="tns:GetLastTradePriceOutput"/>
     </operation>
@@ -49,6 +50,7 @@
   </binding>
 
   <service name="StockQuoteService">
+    <documentation>Provides real-time stock quote information.</documentation>
     <port name="StockQuotePort" binding="tns:StockQuoteSoapBinding">
       <soap:address location="http://example.com/stockquote"/>
     </port>

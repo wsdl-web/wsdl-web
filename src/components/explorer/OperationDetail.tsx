@@ -171,7 +171,7 @@ function CopyCurlButton({ copied, onClick }: { copied: boolean; onClick: () => v
       ) : (
         <>
           <Copy className="h-3.5 w-3.5" />
-          cURL
+          Copy as cURL
         </>
       )}
     </button>

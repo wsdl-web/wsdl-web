@@ -9,6 +9,14 @@ A browser-based interactive explorer for WSDL web services. Enter a WSDL URL to 
 ### [Try it live &rarr;](https://wsdl-web.github.io/wsdl-web)
 No install required.
 
+### Or run with Docker
+
+```sh
+docker run -p 8080:80 outofcoffee/wsdl-web
+```
+
+Then open http://localhost:8080 in your browser.
+
 ## Features
 
 - **WSDL 1.1 and 2.0** support with automatic version detection
@@ -72,14 +80,6 @@ SOAP services typically don't set CORS headers, so requests from the browser may
 - Serve the app from the same origin as the SOAP service.
 
 The same applies when fetching the WSDL itself — if the WSDL URL doesn't allow cross-origin requests, you'll need to proxy it.
-
-## Docker
-
-```sh
-docker run -p 8080:80 outofcoffee/wsdl-web
-```
-
-Then open http://localhost:8080 in your browser.
 
 ## Building from source
 

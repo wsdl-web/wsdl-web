@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description xmlns="http://www.w3.org/ns/wsdl"
+             xmlns:tns="http://example.com/weather"
+             xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://example.com/weather">
+
+  <types>
+    <xsd:schema targetNamespace="http://example.com/weather">
+      <xsd:element name="GetWeather">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="city" type="xsd:string"/>
+            <xsd:element name="country" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetWeatherResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="temperature" type="xsd:float"/>
+            <xsd:element name="conditions" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <interface name="WeatherInterface">
+    <operation name="GetWeather" pattern="http://www.w3.org/ns/wsdl/in-out">
+      <input element="tns:GetWeather"/>
+      <output element="tns:GetWeatherResponse"/>
+    </operation>
+  </interface>
+
+  <binding name="WeatherSoapBinding" interface="tns:WeatherInterface"
+           type="http://www.w3.org/ns/wsdl/soap"
+           wsoap:protocol="http://www.w3.org/2003/05/soap/bindings/HTTP/">
+    <operation ref="tns:GetWeather" wsoap:action="http://example.com/GetWeather"/>
+  </binding>
+
+  <service name="WeatherService" interface="tns:WeatherInterface">
+    <endpoint name="WeatherEndpoint" binding="tns:WeatherSoapBinding"
+              address="http://example.com/weather"/>
+  </service>
+</description>

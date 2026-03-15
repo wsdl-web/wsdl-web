@@ -1,0 +1,45 @@
+/* Dark theme for PrismJS XML highlighting */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #e4e4e7;
+  text-shadow: none;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  tab-size: 2;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #71717a;
+}
+
+.token.punctuation {
+  color: #a1a1aa;
+}
+
+.token.tag {
+  color: #f87171;
+}
+
+.token.attr-name {
+  color: #fbbf24;
+}
+
+.token.attr-value {
+  color: #34d399;
+}
+
+.token.namespace {
+  color: #c084fc;
+}
+
+.token.entity {
+  color: #60a5fa;
+}

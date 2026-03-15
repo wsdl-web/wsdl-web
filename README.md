@@ -28,13 +28,13 @@ No install required.
 
 Load a WSDL to see its services, endpoints and operations with auto-generated SOAP request envelopes and syntax highlighting.
 
-![Operation detail with SOAP envelope](docs/screenshot-operation.png)
+![Operation detail with SOAP envelope](docs/img/screenshot-operation.png)
 
 ### Try it out
 
 Edit the request XML and execute it directly from the browser.
 
-![Try it out mode](docs/screenshot-try-it-out.png)
+![Try it out mode](docs/img/screenshot-try-it-out.png)
 
 ## Usage
 

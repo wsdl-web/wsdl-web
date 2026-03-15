@@ -1,4 +1,3 @@
-import { Badge } from '@/components/ui/badge'
 import type { SoapVersion, BindingStyle } from '@/lib/wsdl/types'
 
 interface SoapBadgeProps {
@@ -9,12 +8,12 @@ interface SoapBadgeProps {
 export function SoapBadge({ soapVersion, style }: SoapBadgeProps) {
   return (
     <div className="flex items-center gap-1.5">
-      <Badge className="bg-violet-600 hover:bg-violet-600 text-white text-[10px] px-1.5 py-0 font-bold uppercase tracking-wider">
+      <span className="rounded-full bg-[var(--soap-badge)] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[var(--soap-badge-fg)]">
         SOAP {soapVersion}
-      </Badge>
-      <Badge variant="outline" className="text-[10px] px-1.5 py-0 uppercase tracking-wider">
+      </span>
+      <span className="rounded-full border border-[var(--border)] bg-[var(--background)] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-[var(--muted-foreground)]">
         {style}
-      </Badge>
+      </span>
     </div>
   )
 }

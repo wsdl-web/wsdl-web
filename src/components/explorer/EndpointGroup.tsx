@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ChevronRight } from 'lucide-react'
 import type { ResolvedOperation } from '@/lib/wsdl/types'
 import { useWsdlStore } from '@/store/wsdl-store'
 import { OperationCard } from './OperationCard'
@@ -16,24 +16,24 @@ export function EndpointGroup({ groupKey, label, operations }: EndpointGroupProp
   const firstOp = operations[0]
 
   return (
-    <div className="border rounded-lg overflow-hidden">
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden card-shadow card-shadow-hover">
       <button
         onClick={() => toggleGroup(groupKey)}
-        className="flex w-full items-center gap-3 bg-zinc-50 px-5 py-3 text-left hover:bg-zinc-100 transition-colors"
+        className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-[var(--muted)]"
       >
-        <h3 className="text-lg font-bold text-zinc-800 flex-1">{label}</h3>
+        <ChevronRight
+          className={`h-4 w-4 text-[var(--muted-foreground)] shrink-0 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}
+        />
+        <h3 className="text-sm font-semibold text-[var(--foreground)] flex-1">{label}</h3>
         {firstOp && (
           <SoapBadge soapVersion={firstOp.soapVersion} style={firstOp.bindingStyle} />
         )}
-        <span className="text-xs text-zinc-400">{operations.length} operations</span>
-        {isExpanded ? (
-          <ChevronUp className="h-5 w-5 text-zinc-400" />
-        ) : (
-          <ChevronDown className="h-5 w-5 text-zinc-400" />
-        )}
+        <span className="text-xs text-[var(--muted-foreground)]">
+          {operations.length} {operations.length === 1 ? 'operation' : 'operations'}
+        </span>
       </button>
       {isExpanded && (
-        <div className="space-y-2 p-3 bg-white">
+        <div className="border-t border-[var(--border)] divide-y divide-[var(--border)] animate-slide-down stagger-children">
           {operations.map((op) => (
             <OperationCard key={`${op.endpointName}/${op.operationName}`} operation={op} />
           ))}

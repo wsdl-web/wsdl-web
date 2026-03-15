@@ -1,8 +1,5 @@
 import { useEffect } from 'react'
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
+import { Play, X } from 'lucide-react'
 import type { ResolvedOperation } from '@/lib/wsdl/types'
 import { useWsdlStore } from '@/store/wsdl-store'
 import { XmlHighlighter } from '@/components/shared/XmlHighlighter'
@@ -24,7 +21,6 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
     getEffectiveEndpoint,
   } = useWsdlStore()
 
-  // Ensure state exists
   useEffect(() => {
     getOrCreateRequestState(opKey, operation)
   // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run when the operation key changes
@@ -33,115 +29,101 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
   const state = requestStates[opKey]
   if (!state) return null
 
-  const handleExecute = () => {
-    executeRequest(opKey, operation)
-  }
-
-  const handleCancel = () => {
-    setTryItOut(opKey, false)
-  }
+  const handleExecute = () => executeRequest(opKey, operation)
+  const handleCancel = () => setTryItOut(opKey, false)
 
   return (
-    <div className="border-t bg-white px-5 py-4 space-y-4">
-      {/* Request metadata */}
-      <div className="space-y-2">
-        <div className="flex items-center gap-2 text-sm">
-          <span className="font-medium text-zinc-500 w-24">Endpoint:</span>
-          <code className="text-xs bg-zinc-100 px-2 py-1 rounded font-mono text-zinc-700 break-all">
-            {getEffectiveEndpoint(operation)}
-          </code>
-        </div>
+    <div className="border-t border-[var(--soap-row-border)] bg-[var(--soap-row-bg)] px-5 py-5 space-y-5 animate-slide-down">
+      {/* Metadata */}
+      <div className="space-y-2.5">
+        <MetaRow label="Endpoint" value={getEffectiveEndpoint(operation)} mono />
         {operation.soapAction && (
-          <div className="flex items-center gap-2 text-sm">
-            <span className="font-medium text-zinc-500 w-24">SOAPAction:</span>
-            <code className="text-xs bg-zinc-100 px-2 py-1 rounded font-mono text-zinc-700 break-all">
-              {operation.soapAction}
-            </code>
-          </div>
+          <MetaRow label="SOAPAction" value={operation.soapAction} mono />
         )}
-        <div className="flex items-center gap-2 text-sm">
-          <span className="font-medium text-zinc-500 w-24">Binding:</span>
-          <span className="text-xs text-zinc-600">
-            SOAP {operation.soapVersion} / {operation.bindingStyle}
-          </span>
-        </div>
+        <MetaRow label="Binding" value={`SOAP ${operation.soapVersion} / ${operation.bindingStyle}`} />
       </div>
 
-      <Separator />
+      <div className="h-px bg-[var(--border)]" />
 
-      {/* Parameters / Request section */}
+      {/* Request */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h4 className="text-sm font-semibold text-zinc-900">Request</h4>
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+            Request
+          </h4>
           {!state.tryItOut ? (
-            <Button
-              variant="outline"
-              size="sm"
+            <button
               onClick={() => setTryItOut(opKey, true)}
+              className="rounded-lg border border-[var(--primary)]/25 bg-[var(--primary)]/5 px-3 py-1.5 text-xs font-semibold text-[var(--primary)] transition-colors hover:bg-[var(--primary)]/10"
             >
               Try it out
-            </Button>
+            </button>
           ) : (
-            <Button
-              variant="outline"
-              size="sm"
+            <button
               onClick={handleCancel}
+              className="flex items-center gap-1 rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs font-medium text-[var(--muted-foreground)] transition-colors hover:bg-[var(--secondary)]"
             >
+              <X className="h-3 w-3" />
               Cancel
-            </Button>
+            </button>
           )}
         </div>
 
         {state.tryItOut ? (
           <div className="space-y-3">
-            <Textarea
+            <textarea
               value={state.requestXml}
               onChange={(e) => setRequestXml(opKey, e.target.value)}
-              className="font-mono text-xs min-h-[250px] bg-zinc-900 text-zinc-100 border-zinc-700"
               spellCheck={false}
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--code-bg)] p-4 font-mono text-xs text-[var(--code-fg)] min-h-[240px] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 resize-y leading-relaxed"
             />
-            <Button
+            <button
               onClick={handleExecute}
               disabled={state.isExecuting}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+              className="flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:brightness-110 active:scale-[0.97] disabled:opacity-50"
             >
               {state.isExecuting ? (
                 <>
-                  <LoadingSpinner className="h-4 w-4 mr-2" />
+                  <LoadingSpinner className="h-4 w-4" />
                   Executing...
                 </>
               ) : (
-                'Execute'
+                <>
+                  <Play className="h-3.5 w-3.5" />
+                  Execute
+                </>
               )}
-            </Button>
+            </button>
           </div>
         ) : (
           <XmlHighlighter xml={state.requestXml} />
         )}
       </div>
 
-      {/* Response section */}
+      {/* Response */}
       {(state.response || state.error) && (
         <>
-          <Separator />
+          <div className="h-px bg-[var(--border)]" />
           <div>
-            <h4 className="text-sm font-semibold text-zinc-900 mb-3">Response</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)] mb-3">
+              Response
+            </h4>
             {state.error && <ErrorAlert title="Request Failed" message={state.error} />}
             {state.response && (
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
-                  <Badge
-                    className={
+                  <span
+                    className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${
                       state.response.status >= 200 && state.response.status < 300
-                        ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-100'
+                        ? 'bg-[var(--success)]/10 text-[var(--success)]'
                         : state.response.status >= 400
-                          ? 'bg-red-100 text-red-800 hover:bg-red-100'
-                          : 'bg-amber-100 text-amber-800 hover:bg-amber-100'
-                    }
+                          ? 'bg-[var(--destructive)]/10 text-[var(--destructive)]'
+                          : 'bg-[var(--warning)]/10 text-[var(--warning)]'
+                    }`}
                   >
                     {state.response.status} {state.response.statusText}
-                  </Badge>
-                  <span className="text-xs text-zinc-400">
+                  </span>
+                  <span className="text-xs text-[var(--muted-foreground)]">
                     {state.response.durationMs}ms
                   </span>
                 </div>
@@ -151,6 +133,17 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
           </div>
         </>
       )}
+    </div>
+  )
+}
+
+function MetaRow({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
+  return (
+    <div className="flex items-baseline gap-3 text-sm">
+      <span className="text-xs font-medium text-[var(--muted-foreground)] w-20 shrink-0">{label}</span>
+      <span className={`text-xs text-[var(--foreground)] break-all ${mono ? 'font-mono' : ''}`}>
+        {value}
+      </span>
     </div>
   )
 }

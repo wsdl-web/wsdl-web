@@ -1,7 +1,6 @@
 import type { WsdlDocument } from '@/lib/wsdl/types'
-import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
 import { useWsdlStore } from '@/store/wsdl-store'
+import { Globe } from 'lucide-react'
 
 interface ServiceHeaderProps {
   document: WsdlDocument
@@ -11,39 +10,55 @@ export function ServiceHeader({ document: doc }: ServiceHeaderProps) {
   const { baseUrlOverride, setBaseUrlOverride } = useWsdlStore()
   const serviceName = doc.services[0]?.name ?? doc.name ?? 'WSDL Service'
 
-  // Collect unique endpoint addresses from the WSDL
   const endpointAddresses = Array.from(
     new Set(doc.services.flatMap((s) => s.endpoints.map((e) => e.address)))
   )
 
-  return (
-    <div className="border-b bg-white px-6 py-6">
-      <div className="flex items-center gap-3">
-        <h1 className="text-3xl font-bold text-zinc-900">{serviceName}</h1>
-        <Badge variant="outline" className="text-xs">
-          WSDL {doc.version}
-        </Badge>
-      </div>
-      {doc.targetNamespace && (
-        <p className="mt-1 text-sm text-zinc-500 font-mono">{doc.targetNamespace}</p>
-      )}
-      {doc.services.length > 1 && (
-        <p className="mt-2 text-sm text-zinc-600">
-          {doc.services.length} services, {doc.services.reduce((acc, s) => acc + s.endpoints.length, 0)} endpoints
-        </p>
-      )}
+  const defaultOrigin = (() => {
+    try { return new URL(endpointAddresses[0]).origin }
+    catch { return endpointAddresses[0] ?? '' }
+  })()
 
-      <div className="mt-4 flex items-center gap-3">
-        <label className="text-sm font-semibold text-zinc-700 shrink-0">Base URL</label>
-        <Input
+  return (
+    <div className="pt-8 pb-6">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl font-bold tracking-tight text-[var(--foreground)]">
+              {serviceName}
+            </h1>
+            <span className="rounded-full bg-[var(--primary)]/10 px-2.5 py-0.5 text-[11px] font-semibold text-[var(--primary)]">
+              WSDL {doc.version}
+            </span>
+          </div>
+          {doc.targetNamespace && (
+            <p className="mt-1 font-mono text-xs text-[var(--muted-foreground)]">
+              {doc.targetNamespace}
+            </p>
+          )}
+          {doc.services.length > 1 && (
+            <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+              {doc.services.length} services &middot; {doc.services.reduce((acc, s) => acc + s.endpoints.length, 0)} endpoints
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Base URL override */}
+      <div className="mt-5 flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 card-shadow">
+        <Globe className="h-4 w-4 text-[var(--muted-foreground)] shrink-0" />
+        <label className="text-xs font-semibold text-[var(--muted-foreground)] shrink-0">
+          Base URL
+        </label>
+        <input
           value={baseUrlOverride}
           onChange={(e) => setBaseUrlOverride(e.target.value)}
-          placeholder={endpointAddresses[0] ? new URL(endpointAddresses[0]).origin : 'https://...'}
-          className="max-w-md text-sm font-mono"
+          placeholder={defaultOrigin || 'https://...'}
+          className="flex-1 bg-transparent font-mono text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)]/40 focus:outline-none"
         />
-        {endpointAddresses.length > 0 && (
-          <span className="text-xs text-zinc-400 truncate hidden sm:block">
-            WSDL default: {(() => { try { return new URL(endpointAddresses[0]).origin } catch { return endpointAddresses[0] } })()}
+        {defaultOrigin && !baseUrlOverride && (
+          <span className="text-[11px] text-[var(--muted-foreground)] shrink-0 hidden sm:block">
+            default: {defaultOrigin}
           </span>
         )}
       </div>

@@ -1,11 +1,11 @@
-/* Dark theme for PrismJS XML highlighting */
+/* Catppuccin Mocha-inspired XML syntax theme */
 code[class*="language-"],
 pre[class*="language-"] {
-  color: #e4e4e7;
+  color: #cdd6f4;
   text-shadow: none;
-  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
-  font-size: 0.8125rem;
-  line-height: 1.5;
+  font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 0.8rem;
+  line-height: 1.7;
   tab-size: 2;
   white-space: pre;
   word-spacing: normal;
@@ -17,29 +17,30 @@ pre[class*="language-"] {
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: #71717a;
+  color: #6c7086;
+  font-style: italic;
 }
 
 .token.punctuation {
-  color: #a1a1aa;
+  color: #9399b2;
 }
 
 .token.tag {
-  color: #f87171;
+  color: #89b4fa;
 }
 
 .token.attr-name {
-  color: #fbbf24;
+  color: #f9e2af;
 }
 
 .token.attr-value {
-  color: #34d399;
+  color: #a6e3a1;
 }
 
 .token.namespace {
-  color: #c084fc;
+  color: #cba6f7;
 }
 
 .token.entity {
-  color: #60a5fa;
+  color: #89dceb;
 }

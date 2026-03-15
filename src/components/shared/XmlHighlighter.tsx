@@ -18,7 +18,7 @@ export function XmlHighlighter({ xml, className = '' }: XmlHighlighterProps) {
   }, [xml])
 
   return (
-    <pre className={`overflow-auto rounded-md bg-zinc-900 p-4 text-sm ${className}`}>
+    <pre className={`overflow-auto rounded-xl border border-[var(--border)] bg-[var(--code-bg)] p-4 text-sm ${className}`}>
       <code ref={codeRef} className="language-xml">
         {xml}
       </code>

@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
-import { Play, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Play, X, Copy, Check } from 'lucide-react'
 import type { ResolvedOperation } from '@/lib/wsdl/types'
 import { useWsdlStore } from '@/store/wsdl-store'
+import { buildCurlCommand } from '@/lib/soap/curl-builder'
 import { XmlHighlighter } from '@/components/shared/XmlHighlighter'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 import { ErrorAlert } from '@/components/shared/ErrorAlert'
@@ -29,8 +30,23 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
   const state = requestStates[opKey]
   if (!state) return null
 
+  const [curlCopied, setCurlCopied] = useState(false)
+
   const handleExecute = () => executeRequest(opKey, operation)
   const handleCancel = () => setTryItOut(opKey, false)
+
+  const handleCopyCurl = () => {
+    const curl = buildCurlCommand({
+      endpointUrl: getEffectiveEndpoint(operation),
+      soapAction: operation.soapAction,
+      soapVersion: operation.soapVersion,
+      body: state.requestXml,
+    })
+    navigator.clipboard.writeText(curl).then(() => {
+      setCurlCopied(true)
+      setTimeout(() => setCurlCopied(false), 2000)
+    })
+  }
 
   return (
     <div className="border-t border-[var(--soap-row-border)] bg-[var(--soap-row-bg)] px-5 py-5 space-y-5 animate-slide-down">
@@ -77,23 +93,26 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
               spellCheck={false}
               className="w-full rounded-xl border border-[var(--border)] bg-[var(--code-bg)] p-4 font-mono text-xs text-[var(--code-fg)] min-h-[240px] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 resize-y leading-relaxed"
             />
-            <button
-              onClick={handleExecute}
-              disabled={state.isExecuting}
-              className="flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:brightness-110 active:scale-[0.97] disabled:opacity-50"
-            >
-              {state.isExecuting ? (
-                <>
-                  <LoadingSpinner className="h-4 w-4" />
-                  Executing...
-                </>
-              ) : (
-                <>
-                  <Play className="h-3.5 w-3.5" />
-                  Execute
-                </>
-              )}
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleExecute}
+                disabled={state.isExecuting}
+                className="flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:brightness-110 active:scale-[0.97] disabled:opacity-50"
+              >
+                {state.isExecuting ? (
+                  <>
+                    <LoadingSpinner className="h-4 w-4" />
+                    Executing...
+                  </>
+                ) : (
+                  <>
+                    <Play className="h-3.5 w-3.5" />
+                    Execute
+                  </>
+                )}
+              </button>
+              <CopyCurlButton copied={curlCopied} onClick={handleCopyCurl} />
+            </div>
           </div>
         ) : (
           <XmlHighlighter xml={state.requestXml} />
@@ -134,6 +153,28 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
         </>
       )}
     </div>
+  )
+}
+
+function CopyCurlButton({ copied, onClick }: { copied: boolean; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex items-center gap-1.5 rounded-lg border border-[var(--border)] px-3 py-2.5 text-xs font-medium text-[var(--secondary-foreground)] transition-colors hover:bg-[var(--secondary)]"
+      title="Copy as cURL"
+    >
+      {copied ? (
+        <>
+          <Check className="h-3.5 w-3.5 text-[var(--success)]" />
+          Copied
+        </>
+      ) : (
+        <>
+          <Copy className="h-3.5 w-3.5" />
+          cURL
+        </>
+      )}
+    </button>
   )
 }
 

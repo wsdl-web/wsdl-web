@@ -57,6 +57,13 @@ Do **not** add `Co-Authored-By` trailers to commit messages.
 
 Keep commit messages short — a subject line plus at most one brief summary line. Do not itemise every file or change.
 
+## Documentation
+
+When adding or changing features, always update the relevant documentation:
+
+- `README.md` — update the Features list and Usage section
+- `docs/roadmap.md` — mark completed items and add new ones if applicable
+
 ## Testing
 
 - Run `npm test` before committing. All tests must pass.

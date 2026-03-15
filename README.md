@@ -18,6 +18,9 @@ No install required.
 - **"Try it out" mode** — edit the generated XML, then execute the request and see the response
 - **Syntax-highlighted XML** for requests and responses
 - **Response metadata** — HTTP status, response time, full response body
+- **Copy as cURL** — copy the SOAP request as a ready-to-use cURL command
+- **Base URL override** — redirect requests to a different host (e.g. localhost)
+- **Local file support** — browse and load WSDL files from your device
 
 ## Screenshots
 

@@ -18,8 +18,8 @@ Add a headers panel — global or per-operation — where users can add key/valu
 ### 4. SOAP Fault parsing and display
 Detect `<soap:Fault>` in responses and render them distinctly — showing faultcode, faultstring, and detail in a structured, readable format.
 
-### 5. WSDL `<import>` and `<include>` resolution
-Recursive fetching and merging of imported WSDLs and XSD files. Required for many enterprise services that split schemas across multiple files.
+### ~~5. WSDL `<import>` and `<include>` resolution~~ ✅
+~~Recursive fetching and merging of imported WSDLs and XSD files. Required for many enterprise services that split schemas across multiple files.~~
 
 ---
 

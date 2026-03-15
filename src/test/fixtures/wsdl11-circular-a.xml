@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://example.com/circular-a"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             name="CircularA"
+             targetNamespace="http://example.com/circular-a">
+
+  <import namespace="http://example.com/circular-b" location="http://example.com/circular-b.wsdl"/>
+
+  <types>
+    <xsd:schema targetNamespace="http://example.com/circular-a">
+      <xsd:element name="OpA">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="value" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <message name="OpAInput">
+    <part name="body" element="tns:OpA"/>
+  </message>
+
+  <portType name="CircularAPortType">
+    <operation name="OpA">
+      <input message="tns:OpAInput"/>
+    </operation>
+  </portType>
+
+  <binding name="CircularASoapBinding" type="tns:CircularAPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="OpA">
+      <soap:operation soapAction="http://example.com/OpA"/>
+      <input><soap:body use="literal"/></input>
+    </operation>
+  </binding>
+
+  <service name="CircularAService">
+    <port name="CircularAPort" binding="tns:CircularASoapBinding">
+      <soap:address location="http://example.com/circular-a"/>
+    </port>
+  </service>
+</definitions>

@@ -3,6 +3,7 @@ import { WSDL_11_NS, WSDL_20_NS } from '../soap/constants'
 import { parseXml } from '../xml/parser'
 import { parseWsdl1 } from './wsdl1-parser'
 import { parseWsdl2 } from './wsdl2-parser'
+import { resolveImports } from './import-resolver'
 
 export class WsdlParseError extends Error {
   constructor(message: string) {
@@ -20,7 +21,9 @@ export async function fetchAndParseWsdl(url: string): Promise<WsdlDocument> {
     throw new WsdlParseError(`Failed to fetch WSDL: ${response.status} ${response.statusText}`)
   }
   const text = await response.text()
-  return parseWsdlText(text)
+  const xmlDoc = parseXml(text)
+  const doc = parseWsdlDocument(xmlDoc)
+  return resolveImports(doc, xmlDoc, url)
 }
 
 /**

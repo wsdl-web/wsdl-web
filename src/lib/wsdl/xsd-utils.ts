@@ -17,7 +17,7 @@ export function parseXsdTypes(typesElement: Element | null): XsdTypeMap {
   return typeMap
 }
 
-function parseSchemaElements(schema: Element, tns: string, typeMap: XsdTypeMap): void {
+export function parseSchemaElements(schema: Element, tns: string, typeMap: XsdTypeMap): void {
   // Parse top-level elements
   for (const el of getChildElements(schema, XSD_NS, 'element')) {
     const name = getAttr(el, 'name')

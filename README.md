@@ -30,6 +30,7 @@ Then open http://localhost:8080 in your browser.
 - **Inline documentation** — displays `<wsdl:documentation>` from services and operations
 - **Base URL override** — redirect requests to a different host (e.g. localhost)
 - **Local file support** — browse and load WSDL files from your device
+- **Import/include resolution** — recursive fetching and merging of `<wsdl:import>`, `<xsd:import>`, and `<xsd:include>` across multiple files
 - **Deep linking** — shareable URLs with `?url=` to pre-load a WSDL and `#service/endpoint/operation` to jump to a specific operation
 
 ## Screenshots

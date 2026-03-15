@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://example.com/main"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             name="MainService"
+             targetNamespace="http://example.com/main">
+
+  <import namespace="http://example.com/imported" location="http://example.com/imported.wsdl"/>
+
+  <types>
+    <xsd:schema targetNamespace="http://example.com/main">
+      <xsd:element name="Ping">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="PingResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="reply" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <message name="PingInput">
+    <part name="body" element="tns:Ping"/>
+  </message>
+  <message name="PingOutput">
+    <part name="body" element="tns:PingResponse"/>
+  </message>
+
+  <portType name="MainPortType">
+    <operation name="Ping">
+      <input message="tns:PingInput"/>
+      <output message="tns:PingOutput"/>
+    </operation>
+  </portType>
+
+  <binding name="MainSoapBinding" type="tns:MainPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="Ping">
+      <soap:operation soapAction="http://example.com/Ping"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+
+  <service name="MainService">
+    <port name="MainPort" binding="tns:MainSoapBinding">
+      <soap:address location="http://example.com/main"/>
+    </port>
+  </service>
+</definitions>

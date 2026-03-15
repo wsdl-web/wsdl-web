@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://example.com/common-types">
+
+  <xsd:complexType name="Address">
+    <xsd:sequence>
+      <xsd:element name="street" type="xsd:string"/>
+      <xsd:element name="city" type="xsd:string"/>
+      <xsd:element name="zip" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="Currency">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+
+</xsd:schema>

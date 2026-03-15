@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://example.com/imported"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             name="ImportedService"
+             targetNamespace="http://example.com/imported">
+
+  <types>
+    <xsd:schema targetNamespace="http://example.com/imported">
+      <xsd:element name="Echo">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="text" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="EchoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <message name="EchoInput">
+    <part name="body" element="tns:Echo"/>
+  </message>
+  <message name="EchoOutput">
+    <part name="body" element="tns:EchoResponse"/>
+  </message>
+
+  <portType name="ImportedPortType">
+    <operation name="Echo">
+      <input message="tns:EchoInput"/>
+      <output message="tns:EchoOutput"/>
+    </operation>
+  </portType>
+
+  <binding name="ImportedSoapBinding" type="tns:ImportedPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="Echo">
+      <soap:operation soapAction="http://example.com/Echo"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+
+  <service name="ImportedService">
+    <port name="ImportedPort" binding="tns:ImportedSoapBinding">
+      <soap:address location="http://example.com/imported"/>
+    </port>
+  </service>
+</definitions>

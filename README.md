@@ -4,6 +4,8 @@ A browser-based interactive explorer for WSDL web services. Enter a WSDL URL to 
 
 Think [Swagger UI](https://github.com/swagger-api/swagger-ui), but for SOAP/WSDL.
 
+**[Try it live](https://wsdl-tools.github.io/wsdl-web-ui)** — no install required.
+
 ## Features
 
 - **WSDL 1.1 and 2.0** support with automatic version detection

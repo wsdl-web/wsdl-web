@@ -1,0 +1,19 @@
+requireBranch: main
+
+ignore:
+  - "prep for release"
+  - "next development version"
+
+before:
+  - script: |
+      npm run lint
+      npm test
+      npm run build
+      npm version "${SINCE_NEW_VERSION}" --no-git-tag-version
+      git add package.json package-lock.json
+
+after:
+  - script: |
+      npm version 0.0.0 --no-git-tag-version
+      git add package.json package-lock.json
+      git commit -m"build: next development version."

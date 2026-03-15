@@ -22,6 +22,7 @@ No install required.
 - **Inline documentation** — displays `<wsdl:documentation>` from services and operations
 - **Base URL override** — redirect requests to a different host (e.g. localhost)
 - **Local file support** — browse and load WSDL files from your device
+- **Deep linking** — shareable URLs with `?url=` to pre-load a WSDL and `#service/endpoint/operation` to jump to a specific operation
 
 ## Screenshots
 
@@ -47,6 +48,20 @@ Edit the request XML and execute it directly from the browser.
 6. Click **Try it out** to make the request editable.
 7. Modify the XML if needed, then click **Execute** to send the SOAP request.
 8. The response (status code, timing, and body XML) is displayed below.
+
+### Deep linking
+
+Share a URL that pre-loads a WSDL and navigates to a specific operation:
+
+```
+https://wsdl-tools.github.io/wsdl-web-ui/?url=https://example.com/service?wsdl#ServiceName/PortName/OperationName
+```
+
+- `?url=<wsdl-url>` loads the WSDL automatically
+- `#Service/Endpoint/Operation` expands the target group and operation
+- `#Service/Endpoint` expands just the endpoint group
+
+The URL updates as you navigate, so you can copy it from the address bar at any time.
 
 ### CORS
 

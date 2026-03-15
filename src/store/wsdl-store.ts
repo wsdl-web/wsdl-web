@@ -37,8 +37,10 @@ interface WsdlStore {
   // UI state
   expandedGroups: Set<string>
   toggleGroup: (id: string) => void
+  expandGroup: (id: string) => void
   expandedOperations: Set<string>
   toggleOperation: (id: string) => void
+  expandOperation: (id: string) => void
 
   // Per-operation request state
   requestStates: Record<string, OperationRequestState>
@@ -139,6 +141,13 @@ export const useWsdlStore = create<WsdlStore>((set, get) => ({
       else next.add(id)
       return { expandedGroups: next }
     }),
+  expandGroup: (id) =>
+    set((state) => {
+      if (state.expandedGroups.has(id)) return state
+      const next = new Set(state.expandedGroups)
+      next.add(id)
+      return { expandedGroups: next }
+    }),
 
   expandedOperations: new Set(),
   toggleOperation: (id) =>
@@ -146,6 +155,13 @@ export const useWsdlStore = create<WsdlStore>((set, get) => ({
       const next = new Set(state.expandedOperations)
       if (next.has(id)) next.delete(id)
       else next.add(id)
+      return { expandedOperations: next }
+    }),
+  expandOperation: (id) =>
+    set((state) => {
+      if (state.expandedOperations.has(id)) return state
+      const next = new Set(state.expandedOperations)
+      next.add(id)
       return { expandedOperations: next }
     }),
 

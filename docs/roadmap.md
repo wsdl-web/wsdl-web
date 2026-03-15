@@ -6,7 +6,7 @@ WSDL Web UI currently covers the core loop: parse WSDL, display services/operati
 
 ## Priority 1 — High impact, fills obvious gaps
 
-### 1. Deep linking (URL hash routing)
+### ~~1. Deep linking (URL hash routing)~~ ✅
 Support `?url=...` to pre-load a WSDL and `#service/endpoint/operation` to auto-expand to a specific operation. Essential for sharing and bookmarking.
 
 ### ~~2. WSDL `<documentation>` extraction and display~~ ✓
@@ -53,8 +53,8 @@ Generate a Postman collection JSON from the parsed WSDL, with one request per op
 ### 13. Expand/collapse all toggle
 Buttons to expand or collapse all endpoint groups and operations at once.
 
-### 14. URL query parameter loading (`?url=...`)
-Auto-load a WSDL when opened with `?url=https://example.com/service?wsdl`.
+### ~~14. URL query parameter loading (`?url=...`)~~ ✅
+Auto-load a WSDL when opened with `?url=https://example.com/service?wsdl`. *(Implemented as part of deep linking.)*
 
 ### 15. Keyboard shortcuts
 `/` to focus URL input, `Escape` to collapse, arrow keys to navigate operations.

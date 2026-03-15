@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FolderOpen, Search, ArrowRight } from 'lucide-react'
 import { useWsdlStore } from '@/store/wsdl-store'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
@@ -7,6 +7,10 @@ export function TopBar() {
   const { wsdlUrl, loadWsdl, loadWsdlFromText, isLoading } = useWsdlStore()
   const [inputUrl, setInputUrl] = useState(wsdlUrl)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    setInputUrl(wsdlUrl)
+  }, [wsdlUrl])
 
   const handleExplore = () => {
     const url = inputUrl.trim()

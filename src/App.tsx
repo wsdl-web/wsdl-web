@@ -1,4 +1,5 @@
 import { useWsdlStore } from '@/store/wsdl-store'
+import { useDeepLink } from '@/hooks/use-deep-link'
 import { TopBar } from '@/components/layout/TopBar'
 import { ServiceHeader } from '@/components/layout/ServiceHeader'
 import { ServiceList } from '@/components/explorer/ServiceList'
@@ -6,6 +7,7 @@ import { ErrorAlert } from '@/components/shared/ErrorAlert'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 
 export default function App() {
+  useDeepLink()
   const { document, operations, isLoading, error } = useWsdlStore()
 
   return (

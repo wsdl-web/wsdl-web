@@ -137,3 +137,39 @@ test.describe('WSDL Explorer', () => {
     await expect(page.getByText('Failed to fetch WSDL')).toBeVisible()
   })
 })
+
+test.describe('Deep linking', () => {
+  test('loads WSDL and expands operation from URL params', async ({ page }) => {
+    await mockWsdlFetch(page)
+    await page.goto(`/?url=${encodeURIComponent(WSDL_URL)}#StockQuoteService/StockQuotePort/GetLastTradePrice`)
+
+    // Should load the WSDL
+    await expect(page.getByText('StockQuoteService')).toBeVisible()
+
+    // Should auto-expand the group and operation
+    await expect(page.getByTestId('operation-GetLastTradePrice')).toBeVisible()
+    await expect(page.getByTestId('operation-GetLastTradePrice').getByText('Endpoint')).toBeVisible()
+
+    // Input should reflect the WSDL URL
+    await expect(page.getByPlaceholder('Paste a WSDL URL...')).toHaveValue(WSDL_URL)
+  })
+
+  test('loads WSDL from url param without hash', async ({ page }) => {
+    await mockWsdlFetch(page)
+    await page.goto(`/?url=${encodeURIComponent(WSDL_URL)}`)
+
+    await expect(page.getByText('StockQuoteService')).toBeVisible()
+    await expect(page.getByText('1 operation')).toBeVisible()
+  })
+
+  test('updates URL when expanding operations', async ({ page }) => {
+    await page.goto('/')
+    await loadWsdlFromUrl(page)
+    await expandFirstGroup(page)
+
+    await page.getByTestId('operation-toggle-GetLastTradePrice').click()
+
+    // URL should now contain the operation hash
+    await expect(page).toHaveURL(/StockQuoteService\/StockQuotePort\/GetLastTradePrice/)
+  })
+})

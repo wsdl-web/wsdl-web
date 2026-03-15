@@ -65,6 +65,7 @@ When adding or changing features, always update the relevant documentation:
 
 - `README.md` — update the Features list and Usage section
 - `docs/roadmap.md` — mark completed items and add new ones if applicable
+- `docs/` — add or update a user-facing documentation page for the feature. `docs/README.md` serves as the index
 
 ## Testing
 

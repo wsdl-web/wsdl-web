@@ -1,0 +1,38 @@
+# Getting Started
+
+## Loading a WSDL
+
+There are two ways to load a WSDL:
+
+1. **From a URL** — paste a WSDL URL into the search bar and click **Explore** (or press Enter).
+2. **From a local file** — click **Browse** to select a `.wsdl` or `.xml` file from your device.
+
+## Exploring services
+
+Once loaded, the app displays:
+
+- **Service name** and WSDL version badge
+- **Target namespace**
+- **Base URL** — override the endpoint host if needed (e.g. to point at localhost)
+
+Operations are grouped by endpoint. Click an endpoint group to expand it, then click an operation to see its details.
+
+## Operation details
+
+Each operation shows:
+
+- **Endpoint** — the URL requests will be sent to
+- **SOAPAction** — the SOAP action header value
+- **Binding** — SOAP version and style (document or RPC)
+- **Request** — a pre-generated SOAP envelope with sample values from the XSD schema
+
+## Sending requests
+
+1. Click **Try it out** to make the request XML editable.
+2. Modify the XML if needed.
+3. Click **Execute** to send the SOAP request.
+4. The response is displayed below with the HTTP status, timing, and full response body.
+
+## Overriding the base URL
+
+The WSDL defines endpoint addresses, but you can override the base URL to redirect requests to a different host. Enter a base URL (e.g. `http://localhost:8080`) in the **Base URL** field — the path from the WSDL endpoint is preserved.

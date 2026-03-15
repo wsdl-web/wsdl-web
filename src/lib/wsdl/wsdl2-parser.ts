@@ -98,8 +98,8 @@ function parseBindings(root: Element): WsdlBinding[] {
     const interfaceRef = interfaceAttr ? getLocalPart(interfaceAttr) : ''
 
     let bindingType: BindingType = 'UNKNOWN'
-    let soapVersion: SoapVersion = '1.2'
-    let style: BindingStyle = 'document'
+    const soapVersion: SoapVersion = '1.2'
+    const style: BindingStyle = 'document'
 
     // WSDL 2.0 binding type attribute
     if (typeAttr === 'http://www.w3.org/ns/wsdl/soap') {

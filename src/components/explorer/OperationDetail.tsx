@@ -27,6 +27,7 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
   // Ensure state exists
   useEffect(() => {
     getOrCreateRequestState(opKey, operation)
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run when the operation key changes
   }, [opKey])
 
   const state = requestStates[opKey]

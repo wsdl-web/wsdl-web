@@ -22,6 +22,8 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
     getEffectiveEndpoint,
   } = useWsdlStore()
 
+  const [curlCopied, setCurlCopied] = useState(false)
+
   useEffect(() => {
     getOrCreateRequestState(opKey, operation)
   // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run when the operation key changes
@@ -29,8 +31,6 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
 
   const state = requestStates[opKey]
   if (!state) return null
-
-  const [curlCopied, setCurlCopied] = useState(false)
 
   const handleExecute = () => executeRequest(opKey, operation)
   const handleCancel = () => setTryItOut(opKey, false)

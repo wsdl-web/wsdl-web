@@ -55,6 +55,8 @@ docs: update README with proxy instructions
 
 Do **not** add `Co-Authored-By` trailers to commit messages.
 
+Use the same conventional commit format for **PR titles** (e.g. `feat: add operation search`).
+
 Keep commit messages short — a subject line plus at most one brief summary line. Do not itemise every file or change.
 
 ## Documentation

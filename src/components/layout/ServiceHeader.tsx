@@ -36,6 +36,11 @@ export function ServiceHeader({ document: doc }: ServiceHeaderProps) {
               {doc.targetNamespace}
             </p>
           )}
+          {doc.services[0]?.documentation && (
+            <p className="mt-2 text-sm text-[var(--muted-foreground)] leading-relaxed">
+              {doc.services[0].documentation}
+            </p>
+          )}
           {doc.services.length > 1 && (
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {doc.services.length} services &middot; {doc.services.reduce((acc, s) => acc + s.endpoints.length, 0)} endpoints

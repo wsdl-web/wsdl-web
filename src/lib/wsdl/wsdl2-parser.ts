@@ -12,7 +12,7 @@ import type {
   SoapVersion,
 } from './types'
 import { WSDL_20_NS } from '../soap/constants'
-import { getChildElements, getFirstChildElement, getAttr, getLocalPart } from './xml-helpers'
+import { getChildElements, getFirstChildElement, getAttr, getLocalPart, getDocumentation } from './xml-helpers'
 import { parseXsdTypes } from './xsd-utils'
 
 // WSDL 2.0 uses a different SOAP binding namespace
@@ -77,10 +77,12 @@ function parseInterfaces(root: Element): WsdlInterface[] {
         ? { name: `${opName}Output`, parts: [{ name: 'parameters', element: getLocalPart(outputElementRef) }] }
         : null
 
-      operations.push({ name: opName, input, output })
+      const opDoc = getDocumentation(opEl, WSDL_20_NS)
+      operations.push({ name: opName, documentation: opDoc, input, output })
     }
 
-    interfaces.push({ name, operations })
+    const ifDoc = getDocumentation(ifEl, WSDL_20_NS)
+    interfaces.push({ name, documentation: ifDoc, operations })
   }
 
   return interfaces
@@ -156,7 +158,8 @@ function parseServices(root: Element): WsdlService[] {
       })
     }
 
-    services.push({ name, endpoints })
+    const svcDoc = getDocumentation(svcEl, WSDL_20_NS)
+    services.push({ name, documentation: svcDoc, endpoints })
   }
 
   return services

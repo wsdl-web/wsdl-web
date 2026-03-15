@@ -28,6 +28,7 @@
 
   <interface name="WeatherInterface">
     <operation name="GetWeather" pattern="http://www.w3.org/ns/wsdl/in-out">
+      <documentation>Returns current weather conditions for a given city and country.</documentation>
       <input element="tns:GetWeather"/>
       <output element="tns:GetWeatherResponse"/>
     </operation>
@@ -40,6 +41,7 @@
   </binding>
 
   <service name="WeatherService" interface="tns:WeatherInterface">
+    <documentation>Provides weather forecasts and current conditions.</documentation>
     <endpoint name="WeatherEndpoint" binding="tns:WeatherSoapBinding"
               address="http://example.com/weather"/>
   </service>

@@ -50,6 +50,13 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
 
   return (
     <div className="border-t border-[var(--soap-row-border)] bg-[var(--soap-row-bg)] px-5 py-5 space-y-5 animate-slide-down">
+      {/* Documentation */}
+      {operation.documentation && (
+        <p className="text-sm text-[var(--muted-foreground)] leading-relaxed">
+          {operation.documentation}
+        </p>
+      )}
+
       {/* Metadata */}
       <div className="space-y-2.5">
         <MetaRow label="Endpoint" value={getEffectiveEndpoint(operation)} mono />

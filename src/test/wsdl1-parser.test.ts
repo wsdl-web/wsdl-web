@@ -63,6 +63,23 @@ describe('WSDL 1.1 Parser', () => {
       expect(op.output).not.toBeNull()
     })
 
+    it('parses service documentation', () => {
+      expect(wsdl.services[0].documentation).toBe('Provides real-time stock quote information.')
+    })
+
+    it('parses operation documentation', () => {
+      expect(wsdl.interfaces[0].operations[0].documentation).toBe(
+        'Returns the last recorded trade price for a given ticker symbol.'
+      )
+    })
+
+    it('propagates operation documentation to resolved operations', () => {
+      const ops = resolveOperations(wsdl)
+      expect(ops[0].documentation).toBe(
+        'Returns the last recorded trade price for a given ticker symbol.'
+      )
+    })
+
     it('parses XSD types', () => {
       expect(Object.keys(wsdl.types).length).toBeGreaterThan(0)
       expect(wsdl.types['GetLastTradePrice']).toBeDefined()
@@ -85,6 +102,11 @@ describe('WSDL 1.1 Parser', () => {
 
     it('detects RPC binding style', () => {
       expect(wsdl.bindings[0].style).toBe('rpc')
+    })
+
+    it('returns undefined when documentation is absent', () => {
+      expect(wsdl.services[0].documentation).toBeUndefined()
+      expect(wsdl.interfaces[0].operations[0].documentation).toBeUndefined()
     })
 
     it('parses type-based message parts', () => {

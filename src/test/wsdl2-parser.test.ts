@@ -51,6 +51,23 @@ describe('WSDL 2.0 Parser', () => {
     expect(op.output!.parts[0].element).toBe('GetWeatherResponse')
   })
 
+  it('parses service documentation', () => {
+    expect(wsdl.services[0].documentation).toBe('Provides weather forecasts and current conditions.')
+  })
+
+  it('parses operation documentation', () => {
+    expect(wsdl.interfaces[0].operations[0].documentation).toBe(
+      'Returns current weather conditions for a given city and country.'
+    )
+  })
+
+  it('propagates operation documentation to resolved operations', () => {
+    const ops = resolveOperations(wsdl)
+    expect(ops[0].documentation).toBe(
+      'Returns current weather conditions for a given city and country.'
+    )
+  })
+
   it('parses XSD types', () => {
     expect(wsdl.types['GetWeather']).toBeDefined()
     expect(wsdl.types['GetWeather'].fields).toHaveLength(2)

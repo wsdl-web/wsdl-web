@@ -126,6 +126,20 @@ test.describe('WSDL Explorer', () => {
     await expect(page.getByText('182.5')).toBeVisible()
   })
 
+  test('displays service and operation documentation', async ({ page }) => {
+    await loadWsdlFromUrl(page)
+
+    // Service-level documentation in the header
+    await expect(page.getByText('Provides real-time stock quote information.')).toBeVisible()
+
+    // Operation-level documentation in the detail view
+    await expandFirstGroup(page)
+    await page.getByTestId('operation-toggle-GetLastTradePrice').click()
+    await expect(
+      page.getByText('Returns the last recorded trade price for a given ticker symbol.'),
+    ).toBeVisible()
+  })
+
   test('shows error when WSDL fetch fails', async ({ page }) => {
     await page.route('**/bad-service?wsdl*', (route) =>
       route.fulfill({ status: 500, body: 'Internal Server Error' }),

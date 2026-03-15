@@ -55,6 +55,18 @@ export function getFirstChildElement(
 }
 
 /**
+ * Get the text content of the first <documentation> child element.
+ */
+export function getDocumentation(
+  parent: Element,
+  namespace: string,
+): string | undefined {
+  const docEl = getFirstChildElement(parent, namespace, 'documentation')
+  const text = docEl?.textContent?.trim()
+  return text || undefined
+}
+
+/**
  * Get attribute value or undefined.
  */
 export function getAttr(el: Element, name: string): string | undefined {

@@ -13,7 +13,7 @@ import type {
   SoapVersion,
 } from './types'
 import { WSDL_11_NS, SOAP_11_BINDING_NS, SOAP_12_BINDING_NS } from '../soap/constants'
-import { getChildElements, getFirstChildElement, getAttr, getLocalPart } from './xml-helpers'
+import { getChildElements, getFirstChildElement, getAttr, getLocalPart, getDocumentation } from './xml-helpers'
 import { parseXsdTypes } from './xsd-utils'
 
 /**
@@ -94,10 +94,12 @@ function parsePortTypes(
       const inputMsg = inputMsgRef ? messages.get(getLocalPart(inputMsgRef)) ?? null : null
       const outputMsg = outputMsgRef ? messages.get(getLocalPart(outputMsgRef)) ?? null : null
 
-      operations.push({ name: opName, input: inputMsg, output: outputMsg })
+      const opDoc = getDocumentation(opEl, WSDL_11_NS)
+      operations.push({ name: opName, documentation: opDoc, input: inputMsg, output: outputMsg })
     }
 
-    interfaces.push({ name, operations })
+    const ptDoc = getDocumentation(ptEl, WSDL_11_NS)
+    interfaces.push({ name, documentation: ptDoc, operations })
   }
 
   return interfaces
@@ -197,7 +199,8 @@ function parseServices(root: Element): WsdlService[] {
       })
     }
 
-    services.push({ name, endpoints })
+    const svcDoc = getDocumentation(svcEl, WSDL_11_NS)
+    services.push({ name, documentation: svcDoc, endpoints })
   }
 
   return services

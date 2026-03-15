@@ -9,8 +9,8 @@ WSDL Web UI currently covers the core loop: parse WSDL, display services/operati
 ### 1. Deep linking (URL hash routing)
 Support `?url=...` to pre-load a WSDL and `#service/endpoint/operation` to auto-expand to a specific operation. Essential for sharing and bookmarking.
 
-### 2. WSDL `<documentation>` extraction and display
-Parse `<wsdl:documentation>` elements on services, port types, and operations. Show them inline — service-level docs in the header, operation-level docs in the detail view.
+### ~~2. WSDL `<documentation>` extraction and display~~ ✓
+~~Parse `<wsdl:documentation>` elements on services, port types, and operations. Show them inline — service-level docs in the header, operation-level docs in the detail view.~~
 
 ### 3. Custom request headers (including WS-Security)
 Add a headers panel — global or per-operation — where users can add key/value pairs included in requests. Covers Basic Auth, API keys, and WS-Security tokens.

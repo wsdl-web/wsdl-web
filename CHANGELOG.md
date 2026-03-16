@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [0.5.0] - 2026-03-16
+### Added
+- feat: resolve WSDL and XSD imports/includes (#26)
+
+### Changed
+- build: ignore test outputs
+- ci: create release on tag push
+
 ## [0.4.0] - 2026-03-16
 ### Added
 - feat: add sticky footer with product name and GitHub link (#29)

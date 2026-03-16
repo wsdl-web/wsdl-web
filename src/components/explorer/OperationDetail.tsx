@@ -3,7 +3,9 @@ import { Play, X, Copy, Check } from 'lucide-react'
 import type { ResolvedOperation } from '@/lib/wsdl/types'
 import { useWsdlStore } from '@/store/wsdl-store'
 import { buildCurlCommand } from '@/lib/soap/curl-builder'
+import { parseSoapFault } from '@/lib/soap/fault-parser'
 import { XmlHighlighter } from '@/components/shared/XmlHighlighter'
+import { SoapFaultAlert } from '@/components/shared/SoapFaultAlert'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 import { ErrorAlert } from '@/components/shared/ErrorAlert'
 
@@ -155,6 +157,10 @@ export function OperationDetail({ operation, opKey }: OperationDetailProps) {
                     {state.response.durationMs}ms
                   </span>
                 </div>
+                {(() => {
+                  const fault = parseSoapFault(state.response.body)
+                  return fault ? <SoapFaultAlert fault={fault} /> : null
+                })()}
                 <XmlHighlighter xml={state.response.body} />
               </div>
             )}

@@ -25,6 +25,7 @@ Then open http://localhost:8080 in your browser.
 - **Auto-generated SOAP requests** from XSD type definitions, with sample values pre-filled
 - **"Try it out" mode** — edit the generated XML, then execute the request and see the response
 - **Syntax-highlighted XML** for requests and responses
+- **SOAP Fault display** — detects `<soap:Fault>` in responses and renders faultcode, faultstring, and detail in a structured format
 - **Response metadata** — HTTP status, response time, full response body
 - **Copy as cURL** — copy the SOAP request as a ready-to-use cURL command
 - **Inline documentation** — displays `<wsdl:documentation>` from services and operations

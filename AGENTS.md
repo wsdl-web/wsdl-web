@@ -6,7 +6,7 @@ WSDL Web — a browser-based SOAP/WSDL explorer (like Swagger UI for WSDL). Sing
 
 ## Tech stack
 
-- **Runtime**: Node.js 18+
+- **Runtime**: Node.js 24+
 - **Build**: Vite 8, TypeScript 5.9
 - **UI**: React 19, Tailwind CSS 4, shadcn/ui (New York style), Lucide icons
 - **State**: Zustand

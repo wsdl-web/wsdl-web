@@ -95,7 +95,7 @@ Both options support configuration for pre-loading a WSDL URL, hiding UI control
 
 ## Building from source
 
-Requires Node.js 18+.
+Requires Node.js 24+.
 
 ```sh
 # Install dependencies

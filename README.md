@@ -84,6 +84,15 @@ SOAP services typically don't set CORS headers, so requests from the browser may
 
 The same applies when fetching the WSDL itself — if the WSDL URL doesn't allow cross-origin requests, you'll need to proxy it.
 
+## Embedding
+
+You can embed wsdl-web into your own application or website:
+
+- **[Dist bundle](docs/embedding-dist-bundle.md)** — drop a `<script>` tag into any HTML page, no build step required. Download the standalone zip from [Releases](https://github.com/wsdl-web/wsdl-web/releases) and call `WsdlWeb.init()`.
+- **[npm package](docs/embedding-npm-package.md)** — use the `<WsdlWeb />` React component in your own project. Install with `npm install wsdl-web`.
+
+Both options support configuration for pre-loading a WSDL URL, hiding UI controls, and overriding the base endpoint URL. See the linked guides for full API details and examples.
+
 ## Building from source
 
 Requires Node.js 18+.

@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { FolderOpen, Search, ArrowRight } from 'lucide-react'
 import { useWsdlStore } from '@/store/wsdl-store'
+import { useConfig } from '@/config-context'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 
 export function TopBar() {
   const { wsdlUrl, loadWsdl, loadWsdlFromText, isLoading } = useWsdlStore()
+  const config = useConfig()
   const [inputUrl, setInputUrl] = useState(wsdlUrl)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -52,54 +54,64 @@ export function TopBar() {
         </div>
 
         {/* Search input */}
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted-foreground)]" />
-          <input
-            value={inputUrl}
-            onChange={(e) => setInputUrl(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Paste a WSDL URL..."
-            disabled={isLoading}
-            className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] py-2.5 pl-10 pr-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 transition-all disabled:opacity-50"
-          />
-        </div>
+        {config.showUrlInput && (
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted-foreground)]" />
+            <input
+              value={inputUrl}
+              onChange={(e) => setInputUrl(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Paste a WSDL URL..."
+              disabled={isLoading}
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] py-2.5 pl-10 pr-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 transition-all disabled:opacity-50"
+            />
+          </div>
+        )}
 
         {/* Explore */}
-        <button
-          onClick={handleExplore}
-          disabled={isLoading || !inputUrl.trim()}
-          className="flex items-center gap-1.5 rounded-lg bg-[var(--primary)] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:brightness-110 active:scale-[0.97] disabled:opacity-40 disabled:pointer-events-none shrink-0"
-        >
-          {isLoading ? (
-            <LoadingSpinner className="h-4 w-4" />
-          ) : (
-            <>
-              Explore
-              <ArrowRight className="h-3.5 w-3.5" />
-            </>
-          )}
-        </button>
+        {config.showExploreButton && (
+          <button
+            onClick={handleExplore}
+            disabled={isLoading || !inputUrl.trim()}
+            className="flex items-center gap-1.5 rounded-lg bg-[var(--primary)] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:brightness-110 active:scale-[0.97] disabled:opacity-40 disabled:pointer-events-none shrink-0"
+          >
+            {isLoading ? (
+              <LoadingSpinner className="h-4 w-4" />
+            ) : (
+              <>
+                Explore
+                <ArrowRight className="h-3.5 w-3.5" />
+              </>
+            )}
+          </button>
+        )}
 
-        {/* Divider */}
-        <div className="h-6 w-px bg-[var(--border)] shrink-0" />
+        {/* Divider - only show when both sides have content */}
+        {config.showBrowseButton && (config.showUrlInput || config.showExploreButton) && (
+          <div className="h-6 w-px bg-[var(--border)] shrink-0" />
+        )}
 
         {/* Browse */}
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".wsdl,.xml"
-          onChange={handleFileChange}
-          className="hidden"
-        />
-        <button
-          onClick={() => fileInputRef.current?.click()}
-          disabled={isLoading}
-          className="flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2.5 text-sm font-medium text-[var(--secondary-foreground)] transition-all hover:bg-[var(--secondary)] active:scale-[0.97] disabled:opacity-40 shrink-0"
-          title="Browse for a local WSDL file"
-        >
-          <FolderOpen className="h-4 w-4 text-[var(--muted-foreground)]" />
-          <span className="hidden sm:block">Browse</span>
-        </button>
+        {config.showBrowseButton && (
+          <>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".wsdl,.xml"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isLoading}
+              className="flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2.5 text-sm font-medium text-[var(--secondary-foreground)] transition-all hover:bg-[var(--secondary)] active:scale-[0.97] disabled:opacity-40 shrink-0"
+              title="Browse for a local WSDL file"
+            >
+              <FolderOpen className="h-4 w-4 text-[var(--muted-foreground)]" />
+              <span className="hidden sm:block">Browse</span>
+            </button>
+          </>
+        )}
       </div>
     </header>
   )

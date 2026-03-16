@@ -1,26 +1,58 @@
-import { ConfigContext, useConfig } from '@/config-context'
-import { defaultConfig } from '@/config'
-import { useWsdlStore } from '@/store/wsdl-store'
-import { useDeepLink } from '@/hooks/use-deep-link'
-import { TopBar } from '@/components/layout/TopBar'
-import { Footer } from '@/components/layout/Footer'
-import { ServiceHeader } from '@/components/layout/ServiceHeader'
-import { ServiceList } from '@/components/explorer/ServiceList'
-import { ErrorAlert } from '@/components/shared/ErrorAlert'
-import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
+import { useEffect } from 'react'
+import type { WsdlWebConfig } from './config'
+import { resolveConfig } from './config'
+import { ConfigContext, useConfig } from './config-context'
+import { useWsdlStore } from './store/wsdl-store'
+import { useDeepLink } from './hooks/use-deep-link'
+import { TopBar } from './components/layout/TopBar'
+import { Footer } from './components/layout/Footer'
+import { ServiceHeader } from './components/layout/ServiceHeader'
+import { ServiceList } from './components/explorer/ServiceList'
+import { ErrorAlert } from './components/shared/ErrorAlert'
+import { LoadingSpinner } from './components/shared/LoadingSpinner'
 
-export default function App() {
+/**
+ * Embeddable WSDL Web component.
+ *
+ * Use this as a top-level component in your React application:
+ *
+ * ```tsx
+ * import { WsdlWeb } from 'wsdl-web'
+ *
+ * function App() {
+ *   return <WsdlWeb url="https://example.com/service?wsdl" />
+ * }
+ * ```
+ */
+export function WsdlWeb(props: WsdlWebConfig) {
+  const config = resolveConfig(props)
+
   return (
-    <ConfigContext.Provider value={defaultConfig}>
-      <AppInner />
+    <ConfigContext.Provider value={config}>
+      <WsdlWebInner />
     </ConfigContext.Provider>
   )
 }
 
-function AppInner() {
+function WsdlWebInner() {
   useDeepLink()
-  useConfig() // ensure config context is available
-  const { document, operations, isLoading, error } = useWsdlStore()
+
+  const config = useConfig()
+  const { document, operations, isLoading, error, loadWsdl, setBaseUrlOverride } = useWsdlStore()
+
+  // Auto-load URL from config on mount
+  useEffect(() => {
+    if (config.url) {
+      loadWsdl(config.url)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Apply baseUrlOverride from config
+  useEffect(() => {
+    if (config.baseUrlOverride) {
+      setBaseUrlOverride(config.baseUrlOverride)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="flex min-h-screen flex-col bg-[var(--background)]">

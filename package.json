@@ -1,16 +1,66 @@
 {
   "name": "wsdl-web",
-  "private": true,
   "version": "0.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
+  "description": "A web-based WSDL explorer and SOAP client. Use as a standalone page, embed via script tag, or include as a React component.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wsdl-web/wsdl-web"
+  },
+  "keywords": [
+    "wsdl",
+    "soap",
+    "web-services",
+    "explorer",
+    "react",
+    "embeddable"
+  ],
+  "main": "./dist-lib/wsdl-web.cjs",
+  "module": "./dist-lib/wsdl-web.mjs",
+  "types": "./dist-lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist-lib/wsdl-web.mjs",
+      "require": "./dist-lib/wsdl-web.cjs",
+      "types": "./dist-lib/types/index.d.ts"
+    },
+    "./style.css": "./dist-lib/wsdl-web.css"
+  },
+  "files": [
+    "dist-lib",
+    "dist-standalone"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:lib": "vite build --config vite.config.lib.ts && tsc --project tsconfig.lib.json",
+    "build:standalone": "vite build --config vite.config.standalone.ts",
+    "build:all": "npm run build && npm run build:lib && npm run build:standalone",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "prepublishOnly": "npm run build:lib"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

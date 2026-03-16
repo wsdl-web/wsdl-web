@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WSDL Web</title>
+
+    <!-- Load the wsdl-web stylesheet -->
+    <link rel="stylesheet" href="wsdl-web.css" />
+
+    <!-- Load the wsdl-web bundle -->
+    <script src="wsdl-web.js"></script>
+  </head>
+  <body>
+    <div id="wsdl-web"></div>
+
+    <script>
+      // Initialize wsdl-web with configuration options.
+      // All options are optional — with no config, the UI shows the
+      // full explorer with URL input, Explore button, and Browse button.
+      WsdlWeb.init(document.getElementById('wsdl-web'), {
+
+        // --- URL ---
+        // Auto-load a WSDL on startup:
+        // url: 'https://example.com/my-service?wsdl',
+
+        // --- UI Controls ---
+        // Hide the URL input field (e.g. when the WSDL is pre-configured):
+        // showUrlInput: false,
+
+        // Hide the Explore button:
+        // showExploreButton: false,
+
+        // Hide the Browse button for local files:
+        // showBrowseButton: false,
+
+        // --- Proxy / Endpoint Override ---
+        // Route all SOAP requests through a different base URL:
+        // baseUrlOverride: 'http://localhost:8080',
+      })
+    </script>
+  </body>
+</html>

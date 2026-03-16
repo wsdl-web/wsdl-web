@@ -109,6 +109,18 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Set version from tag
+        run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version
+      - run: npm run build:standalone
+      - name: Bundle standalone dist
+        run: |
+          cp dist-standalone-template/index.html dist-standalone/
+          cd dist-standalone && zip -r ../wsdl-web-standalone.zip .
       - name: Extract entries from most recent release in CHANGELOG.md
         uses: release-tools/since@daafb0e6603946fd4185212f0decaf03d8fe1bc4
         with:
@@ -117,3 +129,25 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           body_path: release-changes.md
+          files: wsdl-web-standalone.zip
+
+  npm-publish:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [test, e2e]
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - name: Set version from tag
+        run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version
+      - run: npm run build:lib
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

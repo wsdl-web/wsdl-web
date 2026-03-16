@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WSDL Web — Dist Bundle Example</title>
+
+    <!--
+      Copy wsdl-web.js and wsdl-web.css from the dist-standalone/ build output
+      (or download them from the GitHub release) into this directory.
+    -->
+    <link rel="stylesheet" href="wsdl-web.css" />
+    <script src="wsdl-web.js"></script>
+  </head>
+  <body>
+    <div id="wsdl-web"></div>
+
+    <script>
+      // Mount wsdl-web with a pre-configured WSDL URL.
+      // The Explore and Browse buttons are hidden since the WSDL is fixed.
+      WsdlWeb.init(document.getElementById('wsdl-web'), {
+        url: 'https://example.com/my-service?wsdl',
+        showExploreButton: false,
+        showBrowseButton: false,
+        showUrlInput: false,
+      })
+    </script>
+  </body>
+</html>

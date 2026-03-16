@@ -51,6 +51,7 @@ export interface WsdlInterface {
 export interface WsdlInterfaceOperation {
   name: string
   documentation?: string
+  soapAction?: string
   input: WsdlMessage | null
   output: WsdlMessage | null
 }

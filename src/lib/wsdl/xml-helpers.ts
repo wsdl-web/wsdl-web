@@ -72,3 +72,10 @@ export function getDocumentation(
 export function getAttr(el: Element, name: string): string | undefined {
   return el.hasAttribute(name) ? el.getAttribute(name)! : undefined
 }
+
+/**
+ * Get a namespace-qualified attribute value or undefined.
+ */
+export function getAttrNS(el: Element, namespace: string, localName: string): string | undefined {
+  return el.hasAttributeNS(namespace, localName) ? el.getAttributeNS(namespace, localName)! : undefined
+}

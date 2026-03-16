@@ -80,4 +80,24 @@ describe('WSDL 2.0 Parser', () => {
     expect(ops[0].soapVersion).toBe('1.2')
     expect(ops[0].endpointAddress).toBe('http://example.com/weather')
   })
+
+  it('resolves soapAction from binding wsoap:action attribute', () => {
+    const ops = resolveOperations(wsdl)
+    expect(ops[0].soapAction).toBe('http://example.com/GetWeather')
+  })
+})
+
+describe('WSDL 2.0 Parser – soapAction on interface operation', () => {
+  const wsdl = parseWsdlText(loadFixture('wsdl20-interface-soapaction.xml'))
+
+  it('extracts soapAction from wsoap:operation child element', () => {
+    const op = wsdl.interfaces[0].operations[0]
+    expect(op.soapAction).toBe('getPetById')
+  })
+
+  it('resolves soapAction via interface fallback when binding has none', () => {
+    const ops = resolveOperations(wsdl)
+    expect(ops).toHaveLength(1)
+    expect(ops[0].soapAction).toBe('getPetById')
+  })
 })

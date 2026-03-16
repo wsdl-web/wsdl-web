@@ -12,7 +12,7 @@ import type {
   SoapVersion,
 } from './types'
 import { WSDL_20_NS } from '../soap/constants'
-import { getChildElements, getFirstChildElement, getAttr, getLocalPart, getDocumentation } from './xml-helpers'
+import { getChildElements, getFirstChildElement, getAttr, getAttrNS, getLocalPart, getDocumentation } from './xml-helpers'
 import { parseXsdTypes } from './xsd-utils'
 
 // WSDL 2.0 uses a different SOAP binding namespace
@@ -77,8 +77,12 @@ function parseInterfaces(root: Element): WsdlInterface[] {
         ? { name: `${opName}Output`, parts: [{ name: 'parameters', element: getLocalPart(outputElementRef) }] }
         : null
 
+      // Extract soapAction from <wsoap:operation soapAction="..."/> child element
+      const wsoapOpEl = getFirstChildElement(opEl, WSDL2_SOAP_NS, 'operation')
+      const soapAction = wsoapOpEl ? getAttr(wsoapOpEl, 'soapAction') : undefined
+
       const opDoc = getDocumentation(opEl, WSDL_20_NS)
-      operations.push({ name: opName, documentation: opDoc, input, output })
+      operations.push({ name: opName, documentation: opDoc, soapAction, input, output })
     }
 
     const ifDoc = getDocumentation(ifEl, WSDL_20_NS)
@@ -116,7 +120,7 @@ function parseBindings(root: Element): WsdlBinding[] {
       const opName = getAttr(opEl, 'ref')
       if (!opName) continue
 
-      const soapAction = getAttr(opEl, `${WSDL2_SOAP_NS}:action`) ?? ''
+      const soapAction = getAttrNS(opEl, WSDL2_SOAP_NS, 'action') ?? ''
 
       operations.push({
         name: getLocalPart(opName),

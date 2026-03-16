@@ -114,8 +114,6 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Set version from tag
-        run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version
       - run: npm run build:standalone
       - name: Bundle standalone dist
         run: |
@@ -145,8 +143,6 @@ jobs:
           cache: npm
           registry-url: https://registry.npmjs.org
       - run: npm ci
-      - name: Set version from tag
-        run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version
       - run: npm run build:lib
       - run: npm publish --provenance --access public
         env:

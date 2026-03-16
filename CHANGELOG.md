@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [0.6.4] - 2026-03-16
+### Changed
+- build: upgrade to Node.js 24 for npm trusted publishing
+
 ## [0.6.3] - 2026-03-16
 ### Fixed
 - fix: use OIDC auth for npm publish instead of setup-node token

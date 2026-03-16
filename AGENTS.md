@@ -59,6 +59,10 @@ Use the same conventional commit format for **PR titles** (e.g. `feat: add opera
 
 Keep commit messages short — a subject line plus at most one brief summary line. Do not itemise every file or change.
 
+## Pull requests
+
+When creating a pull request that resolves a GitHub issue, always include `fixes #<issue-number>` in the PR body so the issue is automatically closed on merge.
+
 ## Documentation
 
 When adding or changing features, always update the relevant documentation:

@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [0.8.0] - 2026-03-17
+### Added
+- feat: add mkdocs site and deploy static site to wsdl-web.github.io (#31)
+
 ## [0.7.1] - 2026-03-17
 ### Fixed
 - fix: update footer e2e test to match new project link

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/img/wsdl-web-logo.png" alt="WSDL Web logo" width="100">
+  <img src="docs/img/logo.png" alt="WSDL Web logo" width="100">
 </p>
 
 # WSDL Web

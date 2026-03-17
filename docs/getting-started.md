@@ -37,3 +37,13 @@ Each operation shows:
 ## Overriding the base URL
 
 The WSDL defines endpoint addresses, but you can override the base URL to redirect requests to a different host. Enter a base URL (e.g. `http://localhost:8080`) in the **Base URL** field — the path from the WSDL endpoint is preserved.
+
+## CORS
+
+SOAP services typically don't set CORS headers, so requests from the browser may be blocked. If this happens, you can:
+
+- Run a local CORS proxy such as [cors-anywhere](https://github.com/Rob--W/cors-anywhere) and prefix your endpoint URL with the proxy address.
+- Use a browser extension that adds CORS headers.
+- Serve the app from the same origin as the SOAP service.
+
+The same applies when fetching the WSDL itself — if the WSDL URL doesn't allow cross-origin requests, you'll need to proxy it.

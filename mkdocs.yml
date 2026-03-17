@@ -1,0 +1,36 @@
+site_name: WSDL Web
+site_url: https://outofcoffee.github.io/wsdl-web/
+repo_url: https://github.com/outofcoffee/wsdl-web
+
+theme:
+  name: material
+  palette:
+    scheme: default
+    primary: custom
+    accent: custom
+  favicon: img/favicon.png
+  logo: img/logo.png
+  font:
+    text: Plus Jakarta Sans
+    code: JetBrains Mono
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Guides:
+      - SOAP and WSDL versions: soap-support.md
+      - Custom headers: custom-headers.md
+      - SOAP fault display: soap-faults.md
+      - Import and include resolution: import-resolution.md
+      - Deep linking: deep-linking.md
+      - Copy as cURL: copy-as-curl.md
+      - WSDL documentation: wsdl-documentation.md
+  - Embedding:
+      - Dist bundle: embedding-dist-bundle.md
+      - npm package: embedding-npm-package.md
+  - Docker: docker.md
+
+docs_dir: docs

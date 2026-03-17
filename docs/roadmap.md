@@ -28,8 +28,8 @@ Support `?url=...` to pre-load a WSDL and `#service/endpoint/operation` to auto-
 ### 6. Operation search/filter
 A search input above the operation list that filters by operation name or SOAPAction.
 
-### 7. Copy request as cURL
-Generate a copyable cURL command with the correct Content-Type, SOAPAction header, and request body. Useful for debugging and sharing.
+### ~~7. Copy request as cURL~~ ✅
+~~Generate a copyable cURL command with the correct Content-Type, SOAPAction header, and request body. Useful for debugging and sharing.~~
 
 ### 8. Response pretty-printing and collapsible XML tree
 Toggle between raw XML and a collapsible tree view (expand/collapse elements).

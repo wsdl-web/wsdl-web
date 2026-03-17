@@ -51,16 +51,34 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - run: npm run build -- --base=/wsdl-web/
-      - name: Upload Pages artifact
+      - run: npm run build
+      - name: Upload dist artifact
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
+          name: site-dist
           path: dist
 
-  deploy:
+  deploy-site:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v6
+        with:
+          name: site-dist
+          path: dist
+      - name: Deploy to wsdl-web.github.io
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
+          external_repository: wsdl-web/wsdl-web.github.io
+          publish_branch: main
+          publish_dir: ./dist
+
+  deploy-docs:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [test, e2e]
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -69,6 +87,16 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: pip install 'mkdocs-material>=9,<10'
+      - run: mkdocs build
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

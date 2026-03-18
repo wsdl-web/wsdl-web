@@ -41,7 +41,11 @@ Then open http://localhost:8080 in your browser.
 - **Import/include resolution** — recursive fetching and merging of `<wsdl:import>`, `<xsd:import>`, and `<xsd:include>` across multiple files
 - **Deep linking** — shareable URLs with `?url=` to pre-load a WSDL and `#service/endpoint/operation` to jump to a specific operation
 
+## Documentation
+
 ### [View documentation &rarr;](https://wsdl-web.github.io/wsdl-web)
+
+See an example: [Sample WSDL](https://wsdl-web.github.io/?url=sample.wsdl)
 
 ## Screenshots
 

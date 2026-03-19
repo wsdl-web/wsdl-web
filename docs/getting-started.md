@@ -6,7 +6,7 @@ There are three ways to load a WSDL:
 
 1. **From a URL** — paste a WSDL URL into the search bar and click **Explore** (or press Enter).
 2. **From a local file** — click **Browse** to select a `.wsdl` or `.xml` file from your device.
-3. **From a deep link** — open a URL with `?url=<wsdl-url>` to load a WSDL automatically. Add `#Service/Endpoint/Operation` to jump straight to a specific operation. Example: `https://wsdl-web.github.io/wsdl-web/?url=https://example.com/service?wsdl#MyService/MyPort/GetData`
+3. **From a deep link** — open a URL with `?url=<wsdl-url>` to load a WSDL automatically. Add `#Service/Endpoint/Operation` to jump straight to a specific operation. Example: `https://wsdl-web.github.io/?url=https://example.com/service?wsdl#MyService/MyPort/GetData`
 
 ## Exploring services
 

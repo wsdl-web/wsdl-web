@@ -5,7 +5,7 @@ Share URLs that pre-load a WSDL and navigate directly to a specific operation.
 ## URL format
 
 ```
-https://wsdl-web.github.io/wsdl-web/?url=<wsdl-url>#<Service>/<Endpoint>/<Operation>
+https://wsdl-web.github.io/?url=<wsdl-url>#<Service>/<Endpoint>/<Operation>
 ```
 
 ## Query parameters
@@ -28,13 +28,13 @@ The hash fragment controls which endpoint group and operation are expanded:
 Load a WSDL and jump to a specific operation:
 
 ```
-https://wsdl-web.github.io/wsdl-web/?url=https://example.com/service?wsdl#StockQuoteService/StockQuotePort/GetLastTradePrice
+https://wsdl-web.github.io/?url=https://example.com/service?wsdl#StockQuoteService/StockQuotePort/GetLastTradePrice
 ```
 
 Load a WSDL without navigating to a specific operation:
 
 ```
-https://wsdl-web.github.io/wsdl-web/?url=https://example.com/service?wsdl
+https://wsdl-web.github.io/?url=https://example.com/service?wsdl
 ```
 
 ## Multiple WSDLs
@@ -42,7 +42,7 @@ https://wsdl-web.github.io/wsdl-web/?url=https://example.com/service?wsdl
 Pass multiple `url` parameters to load several WSDLs with a spec switcher dropdown:
 
 ```
-https://wsdl-web.github.io/wsdl-web/?url=https://example.com/users?wsdl&url=https://example.com/orders?wsdl
+https://wsdl-web.github.io/?url=https://example.com/users?wsdl&url=https://example.com/orders?wsdl
 ```
 
 The first URL is loaded automatically, and a dropdown appears in the top bar to switch between them.

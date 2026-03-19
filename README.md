@@ -44,7 +44,7 @@ Then open http://localhost:8080 in your browser.
 
 ## Documentation
 
-### [View documentation &rarr;](https://wsdl-web.github.io/wsdl-web)
+### [View documentation &rarr;](https://wsdl-web.github.io)
 
 See an example: [Sample WSDL](https://wsdl-web.github.io/?url=sample.wsdl)
 
@@ -78,7 +78,7 @@ Edit the request XML and execute it directly from the browser.
 Share a URL that pre-loads a WSDL and navigates to a specific operation:
 
 ```
-https://wsdl-web.github.io/wsdl-web/?url=https://example.com/service?wsdl#ServiceName/PortName/OperationName
+https://wsdl-web.github.io/?url=https://example.com/service?wsdl#ServiceName/PortName/OperationName
 ```
 
 - `?url=<wsdl-url>` loads the WSDL automatically

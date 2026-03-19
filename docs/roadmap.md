@@ -44,8 +44,8 @@ A collapsible "Types" panel showing all XSD complex types, simple types, and ele
 
 ## Priority 3 — Polish and power-user features
 
-### 11. Multiple WSDL support (spec switcher)
-Load multiple WSDLs and switch between them from a dropdown in the top bar.
+### ~~11. Multiple WSDL support (spec switcher)~~ ✅
+~~Load multiple WSDLs and switch between them from a dropdown in the top bar.~~
 
 ### 12. Export to Postman/Insomnia collection
 Generate a Postman collection JSON from the parsed WSDL, with one request per operation pre-configured.

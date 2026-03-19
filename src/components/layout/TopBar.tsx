@@ -4,6 +4,7 @@ import { FolderOpen, Search, ArrowRight } from 'lucide-react'
 import { useWsdlStore } from '@/store/wsdl-store'
 import { useConfig } from '@/config-context'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
+import { WsdlSwitcher } from '@/components/layout/WsdlSwitcher'
 
 export function TopBar() {
   const { wsdlUrl, loadWsdl, loadWsdlFromText, isLoading } = useWsdlStore()
@@ -48,6 +49,9 @@ export function TopBar() {
             WSDL Web
           </span>
         </div>
+
+        {/* WSDL Spec Switcher */}
+        <WsdlSwitcher />
 
         {/* Search input */}
         {config.showUrlInput && (

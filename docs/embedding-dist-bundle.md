@@ -59,13 +59,14 @@ Mounts the wsdl-web explorer into the given DOM element.
 
 ## Configuration Options
 
-| Option              | Type      | Default | Description                                             |
-| ------------------- | --------- | ------- | ------------------------------------------------------- |
-| `url`               | `string`  | `''`    | WSDL URL to load automatically on startup               |
-| `showUrlInput`      | `boolean` | `true`  | Show the URL text input in the top bar                  |
-| `showExploreButton` | `boolean` | `true`  | Show the "Explore" button                               |
-| `showBrowseButton`  | `boolean` | `true`  | Show the "Browse" button for loading local WSDL files   |
-| `baseUrlOverride`   | `string`  | `''`    | Override the base URL for all SOAP endpoint addresses   |
+| Option              | Type                              | Default | Description                                                       |
+| ------------------- | --------------------------------- | ------- | ----------------------------------------------------------------- |
+| `url`               | `string`                          | `''`    | WSDL URL to load automatically on startup                         |
+| `urls`              | `Array<string \| {label, url}>`   | `[]`    | Multiple WSDLs for the spec switcher dropdown (see below)         |
+| `showUrlInput`      | `boolean`                         | `true`  | Show the URL text input in the top bar                            |
+| `showExploreButton` | `boolean`                         | `true`  | Show the "Explore" button                                         |
+| `showBrowseButton`  | `boolean`                         | `true`  | Show the "Browse" button for loading local WSDL files             |
+| `baseUrlOverride`   | `string`                          | `''`    | Override the base URL for all SOAP endpoint addresses             |
 
 ## Examples
 
@@ -80,6 +81,35 @@ Lock the explorer to a specific WSDL and hide all input controls:
     showUrlInput: false,
     showExploreButton: false,
     showBrowseButton: false,
+  })
+</script>
+```
+
+### Multiple WSDLs with spec switcher
+
+Load several WSDLs and let users switch between them from a dropdown:
+
+```html
+<script>
+  WsdlWeb.init(document.getElementById('wsdl-web'), {
+    urls: [
+      { label: 'Users API', url: 'https://example.com/users?wsdl' },
+      { label: 'Orders API', url: 'https://example.com/orders?wsdl' },
+      { label: 'Inventory', url: 'https://example.com/inventory?wsdl' },
+    ],
+  })
+</script>
+```
+
+You can also pass plain URL strings — labels are derived automatically from the hostname and path:
+
+```html
+<script>
+  WsdlWeb.init(document.getElementById('wsdl-web'), {
+    urls: [
+      'https://example.com/users?wsdl',
+      'https://example.com/orders?wsdl',
+    ],
   })
 </script>
 ```

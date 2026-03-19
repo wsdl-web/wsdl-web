@@ -15,6 +15,7 @@ describe('parseDeepLink', () => {
   it('returns nulls when no params', () => {
     const result = parseDeepLink(makeLocation('/wsdl-web/'))
     expect(result.url).toBeNull()
+    expect(result.urls).toEqual([])
     expect(result.target).toBeNull()
   })
 
@@ -65,6 +66,24 @@ describe('parseDeepLink', () => {
       endpoint: 'My/Port',
       operation: 'Get Data',
     })
+  })
+
+  it('extracts multiple url params into urls array', () => {
+    const result = parseDeepLink(
+      makeLocation('/wsdl-web/?url=https%3A%2F%2Fa.com%2Fsvc&url=https%3A%2F%2Fb.com%2Fsvc'),
+    )
+    expect(result.urls).toEqual([
+      'https://a.com/svc',
+      'https://b.com/svc',
+    ])
+    expect(result.url).toBeNull()
+  })
+
+  it('returns empty urls array for single url param', () => {
+    const result = parseDeepLink(
+      makeLocation('/wsdl-web/?url=https%3A%2F%2Fexample.com%2Fservice'),
+    )
+    expect(result.urls).toEqual([])
   })
 })
 

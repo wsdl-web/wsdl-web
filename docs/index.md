@@ -20,6 +20,7 @@ A browser-based interactive explorer for WSDL web services. Enter a WSDL URL to 
 - **Base URL override** — redirect requests to a different host (e.g. localhost)
 - **Local file support** — browse and load WSDL files from your device
 - **Import/include resolution** — recursive fetching and merging of multi-file WSDLs and XSDs
+- **Multiple WSDL support** — load multiple WSDLs and switch between them from a dropdown
 - **Deep linking** — shareable URLs with `?url=` and `#service/endpoint/operation`
 
 ## Quick start

@@ -5,6 +5,7 @@ import { buildSoapEnvelope } from '@/lib/soap/envelope-builder'
 import { sendSoapRequest } from '@/lib/soap/request-sender'
 import { generateSampleXml } from '@/lib/wsdl/xsd-utils'
 import type { SoapResponse, CustomHeader } from '@/lib/soap/types'
+import type { WsdlSpec } from '@/config'
 
 export interface OperationRequestState {
   requestXml: string
@@ -28,6 +29,12 @@ interface WsdlStore {
   operations: ResolvedOperation[]
   loadWsdl: (url: string) => Promise<void>
   loadWsdlFromText: (text: string, sourceName: string) => void
+
+  // Multiple WSDL support (spec switcher)
+  wsdlSpecs: WsdlSpec[]
+  activeSpecIndex: number
+  setWsdlSpecs: (specs: WsdlSpec[]) => void
+  switchSpec: (index: number) => Promise<void>
 
   // Base URL override
   baseUrlOverride: string
@@ -89,6 +96,9 @@ export const useWsdlStore = create<WsdlStore>((set, get) => ({
     try {
       const doc = await fetchAndParseWsdl(url)
       const ops = resolveOperations(doc)
+      // Sync activeSpecIndex if the URL matches a known spec
+      const specs = get().wsdlSpecs
+      const matchIdx = specs.findIndex((s) => s.url === url)
       set({
         document: doc,
         operations: ops,
@@ -96,6 +106,7 @@ export const useWsdlStore = create<WsdlStore>((set, get) => ({
         wsdlUrl: url,
         expandedGroups: new Set(),
         expandedOperations: new Set(),
+        ...(matchIdx >= 0 ? { activeSpecIndex: matchIdx } : {}),
       })
     } catch (err) {
       set({
@@ -124,6 +135,16 @@ export const useWsdlStore = create<WsdlStore>((set, get) => ({
         error: err instanceof Error ? err.message : 'Failed to parse WSDL',
       })
     }
+  },
+
+  wsdlSpecs: [],
+  activeSpecIndex: -1,
+  setWsdlSpecs: (specs) => set({ wsdlSpecs: specs }),
+  switchSpec: async (index: number) => {
+    const specs = get().wsdlSpecs
+    if (index < 0 || index >= specs.length) return
+    set({ activeSpecIndex: index })
+    await get().loadWsdl(specs[index].url)
   },
 
   baseUrlOverride: '',

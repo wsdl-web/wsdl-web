@@ -1,11 +1,9 @@
 import { createContext, useContext } from 'react'
-import type { WsdlWebConfig } from './config'
+import type { ResolvedWsdlWebConfig } from './config'
 import { defaultConfig } from './config'
 
-export const ConfigContext = createContext<Required<WsdlWebConfig>>(
-  defaultConfig as Required<WsdlWebConfig>,
-)
+export const ConfigContext = createContext<ResolvedWsdlWebConfig>(defaultConfig)
 
-export function useConfig(): Required<WsdlWebConfig> {
+export function useConfig(): ResolvedWsdlWebConfig {
   return useContext(ConfigContext)
 }

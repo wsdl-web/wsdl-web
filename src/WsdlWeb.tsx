@@ -38,11 +38,14 @@ function WsdlWebInner() {
   useDeepLink()
 
   const config = useConfig()
-  const { document, operations, isLoading, error, loadWsdl, setBaseUrlOverride } = useWsdlStore()
+  const { document, operations, isLoading, error, loadWsdl, setBaseUrlOverride, setWsdlSpecs, switchSpec } = useWsdlStore()
 
-  // Auto-load URL from config on mount
+  // Initialize multi-WSDL specs and auto-load on mount
   useEffect(() => {
-    if (config.url) {
+    if (config.urls.length > 0) {
+      setWsdlSpecs(config.urls)
+      switchSpec(0)
+    } else if (config.url) {
       loadWsdl(config.url)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps

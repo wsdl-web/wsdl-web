@@ -34,13 +34,14 @@ import type { WsdlWebConfig } from 'wsdl-web'
 
 ### Props
 
-| Prop                | Type      | Default | Description                                             |
-| ------------------- | --------- | ------- | ------------------------------------------------------- |
-| `url`               | `string`  | `''`    | WSDL URL to load automatically on startup               |
-| `showUrlInput`      | `boolean` | `true`  | Show the URL text input in the top bar                  |
-| `showExploreButton` | `boolean` | `true`  | Show the "Explore" button                               |
-| `showBrowseButton`  | `boolean` | `true`  | Show the "Browse" button for loading local WSDL files   |
-| `baseUrlOverride`   | `string`  | `''`    | Override the base URL for all SOAP endpoint addresses   |
+| Prop                | Type                              | Default | Description                                                       |
+| ------------------- | --------------------------------- | ------- | ----------------------------------------------------------------- |
+| `url`               | `string`                          | `''`    | WSDL URL to load automatically on startup                         |
+| `urls`              | `Array<string \| {label, url}>`   | `[]`    | Multiple WSDLs for the spec switcher dropdown (see below)         |
+| `showUrlInput`      | `boolean`                         | `true`  | Show the URL text input in the top bar                            |
+| `showExploreButton` | `boolean`                         | `true`  | Show the "Explore" button                                         |
+| `showBrowseButton`  | `boolean`                         | `true`  | Show the "Browse" button for loading local WSDL files             |
+| `baseUrlOverride`   | `string`                          | `''`    | Override the base URL for all SOAP endpoint addresses             |
 
 ## Examples
 
@@ -60,6 +61,36 @@ function WsdlViewer() {
     />
   )
 }
+```
+
+### Multiple WSDLs with spec switcher
+
+```tsx
+import { WsdlWeb } from 'wsdl-web'
+import 'wsdl-web/style.css'
+
+function App() {
+  return (
+    <WsdlWeb
+      urls={[
+        { label: 'Users API', url: 'https://example.com/users?wsdl' },
+        { label: 'Orders API', url: 'https://example.com/orders?wsdl' },
+        { label: 'Inventory', url: 'https://example.com/inventory?wsdl' },
+      ]}
+    />
+  )
+}
+```
+
+Plain URL strings also work — labels are derived automatically:
+
+```tsx
+<WsdlWeb
+  urls={[
+    'https://example.com/users?wsdl',
+    'https://example.com/orders?wsdl',
+  ]}
+/>
 ```
 
 ### Dynamic URL from state

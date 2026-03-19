@@ -39,6 +39,7 @@ Then open http://localhost:8080 in your browser.
 - **Base URL override** — redirect requests to a different host (e.g. localhost)
 - **Local file support** — browse and load WSDL files from your device
 - **Import/include resolution** — recursive fetching and merging of `<wsdl:import>`, `<xsd:import>`, and `<xsd:include>` across multiple files
+- **Multiple WSDL support** — load multiple WSDLs and switch between them from a dropdown in the top bar
 - **Deep linking** — shareable URLs with `?url=` to pre-load a WSDL and `#service/endpoint/operation` to jump to a specific operation
 
 ## Documentation
@@ -81,6 +82,7 @@ https://wsdl-web.github.io/wsdl-web/?url=https://example.com/service?wsdl#Servic
 ```
 
 - `?url=<wsdl-url>` loads the WSDL automatically
+- `?url=<url1>&url=<url2>` loads multiple WSDLs with a spec switcher dropdown
 - `#Service/Endpoint/Operation` expands the target group and operation
 - `#Service/Endpoint` expands just the endpoint group
 

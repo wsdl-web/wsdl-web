@@ -18,6 +18,8 @@ export function useDeepLink(): void {
     loadWsdl,
     expandGroup,
     expandOperation,
+    setWsdlSpecs,
+    switchSpec,
   } = useWsdlStore()
 
   // URL → State: on mount, parse URL and trigger load
@@ -25,13 +27,34 @@ export function useDeepLink(): void {
     if (hasInitializedRef.current) return
     hasInitializedRef.current = true
 
-    const { url, target } = parseDeepLink(window.location)
+    const { url, urls, target } = parseDeepLink(window.location)
+
+    // Multiple WSDLs from query string: ?url=a&url=b
+    if (urls.length > 0) {
+      const specs = urls.map((u) => {
+        try {
+          const parsed = new URL(u)
+          const path = parsed.pathname.replace(/\/$/, '')
+          const tail = path.split('/').filter(Boolean).pop() ?? ''
+          const label = tail ? `${parsed.hostname}/${tail}` : parsed.hostname
+          return { label, url: u }
+        } catch {
+          return { label: u, url: u }
+        }
+      })
+      isUpdatingFromUrlRef.current = true
+      pendingTargetRef.current = target
+      setWsdlSpecs(specs)
+      switchSpec(0)
+      return
+    }
+
     if (!url) return
 
     isUpdatingFromUrlRef.current = true
     pendingTargetRef.current = target
     loadWsdl(url)
-  }, [loadWsdl])
+  }, [loadWsdl, setWsdlSpecs, switchSpec])
 
   // After WSDL loads, expand pending target
   useEffect(() => {

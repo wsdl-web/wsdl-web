@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [0.10.1] - 2026-03-20
+### Changed
+- docs: link to documentation site
+
+### Fixed
+- fix: correct URLs to use correct GitHub Pages base path (#33)
+- fix: replace process.env.NODE_ENV for browser compatibility in standalone bundle (#35)
+
 ## [0.10.0] - 2026-03-19
 ### Added
 - feat: add multiple WSDL support with spec switcher (#32)

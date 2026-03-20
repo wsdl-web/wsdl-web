@@ -44,7 +44,7 @@ Then open http://localhost:8080 in your browser.
 
 ## Documentation
 
-### [View documentation &rarr;](https://wsdl-web.github.io)
+### [View documentation &rarr;](https://wsdl-web.github.io/wsdl-web)
 
 See an example: [Sample WSDL](https://wsdl-web.github.io/?url=sample.wsdl)
 
